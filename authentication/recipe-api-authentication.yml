@@ -1,0 +1,25 @@
+generated: '2026-08-03'
+method: derived
+status: published
+source: openapi/recipe-api-openapi.json
+description: API key in a header. Notably the API also exposes a keyless quick-start
+  endpoint, so a developer or an agent can make a real call before signing up.
+verified: '2026-08-03'
+evidence:
+- url: https://recipe-api.com/openapi.json
+  status: 200
+  note: securitySchemes read from the published spec
+- url: https://recipe-api.com/api/v1/dinner
+  status: 200
+  note: documented keyless quick-start call
+schemes:
+- id: ApiKeyAuth
+  type: apiKey
+  in: header
+  name: X-API-Key
+  format: rapi_<key>
+  description: API key issued on signup.
+keyless_access:
+  available: true
+  endpoint: https://recipe-api.com/api/v1/dinner
+  note: Documented in the spec description as a no-key quick start.

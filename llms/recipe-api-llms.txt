@@ -1,0 +1,532 @@
+# Recipe API - Complete LLM Context
+
+> Production-ready B2B Recipe API with structured recipes, USDA-verified nutrition data, and no attribution required.
+
+For the full API reference with complete schemas, see: https://recipe-api.com/llms-full.txt
+
+## Quick Start
+
+Try it now without signup:
+```bash
+curl https://recipe-api.com/api/v1/dinner
+```
+
+With API key:
+```bash
+curl -H "X-API-Key: rapi_your_key" "https://recipe-api.com/api/v1/recipes?category=Dinner&cuisine=Italian"
+```
+
+## Base URL
+https://recipe-api.com
+
+## Authentication
+Protected endpoints require `X-API-Key` header with format `rapi_<48 hex chars>`
+
+Example: `X-API-Key: rapi_abc123def456abc123def456abc123def456abc123def456`
+
+---
+
+## Endpoints
+
+### Public (no auth required)
+
+#### GET /api/v1/dinner
+Returns a complete sample recipe. Perfect for testing schema and evaluating data quality.
+
+#### GET /health
+Health check. Returns `{ "status": "ok", "timestamp": "..." }`
+
+### Discovery (requires API key, no credit cost)
+
+#### GET /api/v1/recipes
+Browse and search recipes (paginated).
+
+**Query Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| q | string | Search by name/description |
+| category | string | Filter by category (e.g., "Dinner", "Breakfast", "Dessert") |
+| cuisine | string | Filter by cuisine (e.g., "Italian", "Mexican", "Japanese") |
+| difficulty | string | "Easy" \| "Intermediate" \| "Advanced" |
+| dietary | string | Comma-separated flags (e.g., "Vegetarian,Gluten-Free") |
+| ingredients | string | Comma-separated ingredient UUIDs (returns recipes with ALL) |
+| min_calories | number | Minimum calories per serving |
+| max_calories | number | Maximum calories per serving |
+| min_protein | number | Minimum protein (g) per serving |
+| max_protein | number | Maximum protein (g) per serving |
+| min_carbs | number | Minimum carbohydrates (g) per serving |
+| max_carbs | number | Maximum carbohydrates (g) per serving |
+| min_fat | number | Minimum fat (g) per serving |
+| max_fat | number | Maximum fat (g) per serving |
+| page | number | Page number (default: 1) |
+| per_page | number | Results per page (default: 20, max: 100) |
+
+**Response:**
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "name": "Recipe Name",
+      "description": "...",
+      "category": "Dinner",
+      "cuisine": "Italian",
+      "difficulty": "Easy",
+      "tags": ["Quick", "Healthy"],
+      "meta": { "total_time": "PT30M", "yields": "4 servings" },
+      "dietary": { "flags": ["Vegetarian"] },
+      "nutrition_summary": { "calories": 450, "protein_g": 25, "carbohydrates_g": 42, "fat_g": 18 }
+    }
+  ],
+  "meta": { "total": 500, "page": 1, "per_page": 20, "total_capped": true }
+}
+```
+
+**Discovery Limit:** Max 500 recipes via pagination. Use filters to access larger result sets.
+
+#### GET /api/v1/categories
+List all categories with recipe counts.
+```json
+{ "data": [{ "name": "Dinner", "count": 5420 }, { "name": "Breakfast", "count": 2100 }] }
+```
+
+#### GET /api/v1/cuisines
+List all cuisines with recipe counts.
+```json
+{ "data": [{ "name": "Italian", "count": 1850 }, { "name": "Mexican", "count": 1200 }] }
+```
+
+#### GET /api/v1/dietary-flags
+List all dietary flags with recipe counts.
+```json
+{ "data": [{ "name": "Vegetarian", "count": 4500 }, { "name": "Gluten-Free", "count": 3200 }] }
+```
+
+#### GET /api/v1/ingredients
+Browse 10,000+ ingredients with filtering.
+
+**Query Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| q | string | Search by ingredient name |
+| category | string | Filter by category (partial match supported) |
+| page | number | Page number (default: 1) |
+| per_page | number | Results per page (default: 50, max: 100) |
+
+**Available Categories (23):**
+Vegetables, Beef, Baked Goods, Beverages, Prepared Foods, Sauces & Condiments, Lamb & Game, Fruits, Sweets, Poultry, Dairy & Eggs, Spices & Herbs, Seafood, Grains & Pasta, Legumes, Pork, Baby Foods, Fats & Oils, Processed Meats, Nuts & Seeds, Breakfast Cereals, Snacks, Indigenous Foods
+
+**Response:**
+```json
+{
+  "data": [
+    { "id": "uuid", "name": "Chickpeas, canned", "category": "Legumes", "source": "USDA" }
+  ],
+  "meta": { "total": 10441, "page": 1, "per_page": 50 }
+}
+```
+Browsing/searching ingredients is free discovery — it returns IDs but no nutrition. Fetch one ingredient's nutrition with the endpoint below.
+
+#### GET /api/v1/ingredients/:id (requires API key, costs 1 credit)
+Get a single ingredient with its full per-100g USDA nutrition (the same 32 nutrients recipes carry). Use an ID from the list endpoint above.
+
+**Response:**
+```json
+{
+  "data": {
+    "id": "uuid",
+    "name": "Chickpeas, canned",
+    "category": "Legumes",
+    "source": "USDA",
+    "nutrition": {
+      "per_100g": { "calories": 139, "protein_g": 7.05, "carbohydrates_g": 22.5, "...": "32 nutrients total" },
+      "sources": ["USDA FoodData Central"]
+    }
+  },
+  "usage": { "monthly_remaining": 4999, "monthly_limit": 5000, "daily_remaining": 199, "daily_limit": 200 }
+}
+```
+
+#### GET /api/v1/ingredient-categories
+List all 23 ingredient categories with counts.
+```json
+{ "data": [{ "name": "Vegetables", "count": 1283 }, { "name": "Beef", "count": 995 }] }
+```
+
+### Recipe Detail (requires API key, costs 1 credit)
+
+#### GET /api/v1/recipes/:id
+Get full recipe by UUID. Returns complete recipe with all fields.
+
+---
+
+## TypeScript Schema
+
+```typescript
+interface Recipe {
+  id: string;                    // UUID
+  name: string;
+  description: string;
+  category: string;              // e.g., "Dinner", "Breakfast", "Dessert"
+  cuisine: string;               // e.g., "Italian", "Mexican", "Japanese"
+  difficulty: "Easy" | "Intermediate" | "Advanced";
+  tags: string[];                // e.g., ["Quick", "Healthy", "Budget-Friendly"]
+
+  meta: {
+    active_time: string;         // ISO 8601 duration, e.g., "PT30M" (30 minutes)
+    passive_time: string;        // e.g., "PT1H" (1 hour of waiting/marinating)
+    total_time: string;          // e.g., "PT1H30M"
+    overnight_required: boolean;
+    yields: string;              // e.g., "4 servings", "12 cookies"
+    yield_count: number;         // Numeric yield for calculations
+    serving_size_g: number | null;
+  };
+
+  dietary: {
+    flags: string[];             // e.g., ["Vegetarian", "Gluten-Free", "Dairy-Free"]
+    not_suitable_for: string[];  // e.g., ["Nut Allergy"]
+  };
+
+  ingredients: IngredientGroup[];
+  instructions: Instruction[];
+
+  nutrition: {
+    per_serving: NutritionData;
+    sources: string[];           // e.g., ["USDA FoodData Central"]
+  };
+
+  equipment: Equipment[];
+  troubleshooting: Troubleshooting[];
+  chef_notes: string[];
+  cultural_context: string | null;
+  storage: Storage;
+}
+
+interface IngredientGroup {
+  group_name: string;            // e.g., "For the dough", "For the sauce"
+  items: Ingredient[];
+}
+
+interface Ingredient {
+  name: string;                  // e.g., "all-purpose flour"
+  quantity: number | null;       // e.g., 250 (null for "to taste")
+  unit: string | null;           // e.g., "g", "ml", "cups", null for count
+  preparation: string | null;    // e.g., "finely diced", "room temperature"
+  notes: string | null;          // e.g., "about 2 medium onions"
+  substitutions: string[];       // e.g., ["gluten-free flour", "almond flour"]
+  ingredient_id: string;         // UUID for ingredient lookup
+  nutrition_source: string;      // e.g., "USDA FoodData Central"
+}
+
+interface Instruction {
+  step_number: number;
+  phase: "prep" | "cook" | "assemble" | "finish";
+  text: string;                  // Human-readable instruction
+  tips: string[];                // Pro tips for this step
+  structured: {
+    action: string;              // e.g., "SEAR", "SIMMER", "FOLD", "ROAST"
+    temperature: {
+      celsius: number;
+      fahrenheit: number;
+    } | null;
+    duration: string | null;     // ISO 8601, e.g., "PT25M"
+    doneness_cues: {
+      visual: string | null;     // e.g., "golden brown edges"
+      tactile: string | null;    // e.g., "springs back when touched"
+    } | null;
+  } | null;
+}
+
+interface NutritionData {
+  calories: number | null;
+  protein_g: number | null;
+  carbohydrates_g: number | null;
+  fat_g: number | null;
+  saturated_fat_g: number | null;
+  trans_fat_g: number | null;
+  monounsaturated_fat_g: number | null;
+  polyunsaturated_fat_g: number | null;
+  fiber_g: number | null;
+  sugar_g: number | null;
+  sodium_mg: number | null;
+  cholesterol_mg: number | null;
+  vitamin_a_iu: number | null;
+  vitamin_c_mg: number | null;
+  vitamin_d_iu: number | null;
+  vitamin_e_mg: number | null;
+  vitamin_k_mcg: number | null;
+  vitamin_b6_mg: number | null;
+  vitamin_b12_mcg: number | null;
+  thiamin_mg: number | null;
+  riboflavin_mg: number | null;
+  niacin_mg: number | null;
+  folate_mcg: number | null;
+  calcium_mg: number | null;
+  iron_mg: number | null;
+  magnesium_mg: number | null;
+  phosphorus_mg: number | null;
+  potassium_mg: number | null;
+  zinc_mg: number | null;
+}
+
+interface Equipment {
+  name: string;                  // e.g., "Stand mixer"
+  required: boolean;
+  alternative: string | null;    // e.g., "Hand mixer or wooden spoon"
+}
+
+interface Troubleshooting {
+  issue: string;                 // e.g., "Dough is too sticky"
+  cause: string;                 // e.g., "Too much liquid or humidity"
+  solution: string;              // e.g., "Add flour 1 tbsp at a time"
+}
+
+interface Storage {
+  refrigerator: { duration: string; notes: string } | null;  // duration is ISO 8601, e.g., "P4D"
+  freezer: { duration: string; notes: string } | null;       // e.g., "P3M" (3 months)
+  reheating: string | null;
+  does_not_keep: boolean;
+}
+```
+
+---
+
+## Pricing & Caching Rights
+
+| Tier | Price | Unique Recipes/mo | Caching Rights |
+|------|-------|-------------------|----------------|
+| **Evaluation** | $0 | 50 lifetime | None (evaluation only) |
+| **Developer** | $29/mo | 250 | 24-hour local caching |
+| **Production** | $99/mo | 1,000 | 7-day local caching |
+| **Scale** | $299/mo | 5,000 | **Persistent application cache** |
+| **Enterprise** | Quote only | Custom | **Custom caching + white-label**, SLA |
+
+### The Value Proposition
+
+Unlike other recipe APIs, Recipe API gives production teams clear caching and
+brand rights:
+
+- **Scale ($299/mo):** Keep fetched recipe responses in your application cache for low-latency production use.
+- **Enterprise (quote only):** Custom caching, white-label rights, partner access, and data-license terms by written agreement.
+
+### Understanding Limits
+
+**Unique recipes/month:** Distinct recipe IDs accessed per billing period. Re-requesting the same recipe doesn't count against this limit. This encourages caching.
+
+**Detail allowance:** 50 lifetime (Evaluation), 15,000/billing period (Developer), 60,000/billing period (Production), 300,000/billing period (Scale).
+
+**Rate/min:** 10 (Evaluation), 20 (Developer), 60 (Production), 300 (Scale).
+
+**Generate limits:** 1 lifetime (Evaluation), 10/day and 150/mo (Developer), 25/day and 500/mo (Production), 50/day and 1,200/mo (Scale). Paid accounts may purchase 100-generation overage packs.
+
+### What happens when limits are exceeded?
+- Returns HTTP 429 with `Retry-After` header
+- Error code: `RATE_LIMITED`, `UNIQUE_RECIPE_LIMIT_EXCEEDED`, or `GENERATE_LIMIT_EXCEEDED` (on /generate)
+- Evaluation: upgrade from the actionable limit response; lifetime allowances do not reset
+- Paid tiers: use bundled allowances, then purchased generation overage credits
+
+---
+
+## Error Handling
+
+All errors return JSON:
+```json
+{
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Human-readable description"
+  }
+}
+```
+
+| Code | HTTP | Description |
+|------|------|-------------|
+| UNAUTHORIZED | 401 | Missing or invalid API key |
+| FORBIDDEN | 403 | Valid key but insufficient permissions |
+| NOT_FOUND | 404 | Recipe or endpoint not found |
+| RATE_LIMITED | 429 | Per-minute rate limit or daily/monthly quota exceeded |
+| UNIQUE_RECIPE_LIMIT_EXCEEDED | 429 | Monthly unique recipe limit reached |
+| GENERATE_LIMIT_EXCEEDED | 429 | Generate credits exhausted or generation not in plan |
+| BAD_REQUEST | 400 | Invalid parameters |
+
+---
+
+## Code Examples
+
+### JavaScript/TypeScript
+```typescript
+const API_KEY = 'rapi_your_key';
+const BASE_URL = 'https://recipe-api.com/api/v1';
+
+// Search recipes
+async function searchRecipes(params: Record<string, string>) {
+  const url = new URL(`${BASE_URL}/recipes`);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+
+  const res = await fetch(url, {
+    headers: { 'X-API-Key': API_KEY }
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error.message);
+  }
+
+  return res.json();
+}
+
+// Get full recipe
+async function getRecipe(id: string) {
+  const res = await fetch(`${BASE_URL}/recipes/${id}`, {
+    headers: { 'X-API-Key': API_KEY }
+  });
+  return res.json();
+}
+
+// Usage
+const { data } = await searchRecipes({
+  category: 'Dinner',
+  cuisine: 'Italian',
+  dietary: 'Vegetarian',
+  max_calories: '600'
+});
+```
+
+### Python
+```python
+import requests
+
+API_KEY = 'rapi_your_key'
+BASE_URL = 'https://recipe-api.com/api/v1'
+HEADERS = {'X-API-Key': API_KEY}
+
+def search_recipes(**params):
+    response = requests.get(f'{BASE_URL}/recipes', headers=HEADERS, params=params)
+    response.raise_for_status()
+    return response.json()
+
+def get_recipe(recipe_id):
+    response = requests.get(f'{BASE_URL}/recipes/{recipe_id}', headers=HEADERS)
+    response.raise_for_status()
+    return response.json()
+
+# Usage
+results = search_recipes(category='Dinner', cuisine='Italian', dietary='Vegetarian')
+for recipe in results['data']:
+    print(f"{recipe['name']} - {recipe['nutrition_summary']['calories']} cal")
+```
+
+### cURL Examples
+```bash
+# Search vegetarian Italian dinners under 500 calories
+curl -H "X-API-Key: rapi_your_key" \
+  "https://recipe-api.com/api/v1/recipes?category=Dinner&cuisine=Italian&dietary=Vegetarian&max_calories=500"
+
+# Get full recipe by ID
+curl -H "X-API-Key: rapi_your_key" \
+  "https://recipe-api.com/api/v1/recipes/a066f472-ed0c-46ea-8e2c-a0053c3183a8"
+
+# List all cuisines
+curl -H "X-API-Key: rapi_your_key" \
+  "https://recipe-api.com/api/v1/cuisines"
+```
+
+---
+
+## FAQ
+
+### Getting Started
+
+**How do I get an API key?**
+1. Go to https://recipe-api.com/signup
+2. Enter your email — no card required
+3. Click the sign-in link in your email; it signs you in and lands on https://recipe-api.com/keys
+4. Create an API key on /keys; the plaintext key is shown once, so copy it then
+
+**What format are responses in?**
+All responses are JSON. Recipes follow a consistent schema with structured data for ingredients, instructions, and nutrition.
+
+### Data & Quality
+
+**How accurate is the nutrition data?**
+Nutrition data is sourced from USDA FoodData Central and other verified databases. Each recipe includes 32 nutrients per serving with source attribution.
+
+**Where does the recipe data come from?**
+All recipes are professionally developed and include structured ingredients, step-by-step instructions, troubleshooting tips, chef notes, and cultural context.
+
+**How is the catalog maintained?**
+New recipes are added weekly across multiple cuisines, categories, and dietary preferences, using the same structured schema.
+
+**Is attribution required?**
+No. You can use Recipe API responses in your application without crediting Recipe API, subject to plan limits and the Terms of Service.
+
+### Technical
+
+**Can I cache API responses?**
+Caching rights depend on your plan: Evaluation (no caching), Developer (24-hour local), Production (7-day local), Scale (persistent application cache), Enterprise (custom caching + white-label). Caching is for permitted application use; model training, raw redistribution, bulk dataset export, partner sharing, and post-termination use require written approval. See /terms for details.
+
+**What's the typical response time?**
+Under 100ms (p95) globally. Infrastructure on Fly.io with edge locations.
+
+**Is there an SDK?**
+No public package-manager SDK is available yet. Use the REST/JSON API with any HTTP client, generate a client from /openapi.json, or start from the source SDK and starter repos at https://github.com/recipe-api/start-here.
+
+### Billing
+
+**How do I upgrade?**
+Sign in at https://recipe-api.com/login, then upgrade from https://recipe-api.com/keys.
+
+**Can I cancel anytime?**
+Yes. Access continues until the end of your billing period.
+
+**Do you offer annual billing?**
+Contact paul@recipe-api.com for annual plans.
+
+---
+
+## Best Practices
+
+1. **Cache within your plan** - Recipe data rarely changes. Cache full recipes locally only where your plan allows it.
+
+2. **Use filters** - Don't paginate through all recipes. Use category, cuisine, dietary, and nutrition filters.
+
+3. **Handle rate limits gracefully** - Check `Retry-After` header and implement exponential backoff.
+
+4. **Store recipe IDs** - When users save favorites, store the UUID. Fetch fresh data only when displaying.
+
+5. **Batch wisely** - If fetching multiple recipes, spread requests to stay within rate limits.
+
+---
+
+## Links
+
+- **Homepage:** https://recipe-api.com
+- **Interactive Docs:** https://recipe-api.com/docs
+- **OpenAPI Spec:** https://recipe-api.com/openapi.json
+- **Sign Up:** https://recipe-api.com/signup
+- **Starter Kits (TS/Python/Go) & source SDK:** https://github.com/recipe-api/start-here
+- **Claude MCP Connector:** https://recipe-api.com/api/mcp (Streamable HTTP; setup guide at https://recipe-api.com/mcp)
+- **Compare Plans:** https://recipe-api.com/compare
+- **FAQ:** https://recipe-api.com/faq
+- **API Keys Dashboard:** https://recipe-api.com/keys
+- **Contact:** paul@recipe-api.com
+- **GitHub:** https://github.com/recipe-api
+
+---
+
+## Terms Summary
+
+- Evaluation is for product evaluation and prototypes; commercial use starts on Developer and above
+- No attribution required for permitted in-app use
+- Don't resell raw data, reconstruct the catalog, share keys with third parties, or use self-serve data for model training
+- Rate limits enforced per account
+- We may terminate accounts violating ToS
+- Full terms: https://recipe-api.com/terms
+
+## Privacy Summary
+
+- We collect: email, company name (optional), API usage logs
+- We don't sell your data
+- Payment via Stripe (we don't store card details)
+- GDPR-compliant data handling
+- Full policy: https://recipe-api.com/privacy

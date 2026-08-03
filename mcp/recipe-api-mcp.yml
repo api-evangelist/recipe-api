@@ -1,0 +1,30 @@
+generated: '2026-08-03'
+method: probed
+status: published
+provider_published: true
+source: https://recipe-api.com/mcp
+description: An official Recipe API MCP server, documented for Claude and any MCP
+  client. The JSON-RPC endpoint answers 401 rather than 404, so it exists and is auth-gated
+  — the tool list could not be enumerated anonymously.
+verified: '2026-08-03'
+server:
+  name: recipe-api
+  transport: http
+  url: https://recipe-api.com/api/mcp
+  auth: api-key
+  deployment: vendor-hosted
+  docs: https://recipe-api.com/mcp
+evidence:
+- url: https://recipe-api.com/mcp
+  status: 200
+  note: MCP server documentation page
+- url: https://recipe-api.com/api/mcp
+  status: 401
+  note: POST jsonrpc tools/list — exists, requires a key
+documented_tools:
+- search_recipes
+- filter_recipes
+- list_categories
+gaps:
+- Tool list not enumerable without a key, so the documented tools above are read from
+  the docs page rather than from a live tools/list response.

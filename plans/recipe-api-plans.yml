@@ -1,0 +1,50 @@
+generated: '2026-08-03'
+method: searched
+status: published
+source: https://recipe-api.com/pricing
+description: Four public self-serve tiers. Pricing scales with rights to the data
+  — from evaluating it through to caching it inside a production application — as
+  well as with volume. Every plan mints new recipes into the catalog.
+verified: '2026-08-03'
+evidence:
+- url: https://recipe-api.com/pricing
+  status: 200
+currency: USD
+plans:
+- name: Evaluation
+  price: 0
+  period: month
+  recipes_per_month: 50
+  requests_per_day: 50
+  rate_limit_per_minute: 10
+  generations_per_day: 1
+  recipes_minted_per_month: 1
+- name: Developer
+  price: 29
+  period: month
+  recipes_per_month: 250
+  requests_per_day: 500
+  rate_limit_per_minute: 20
+  generations_per_day: 10
+  recipes_minted_per_month: 150
+- name: Production
+  price: 99
+  period: month
+  popular: true
+  recipes_per_month: 1000
+  requests_per_day: 2000
+  rate_limit_per_minute: 60
+  generations_per_day: 25
+  recipes_minted_per_month: 500
+- name: Scale
+  price: 299
+  period: month
+  recipes_per_month: 5000
+  requests_per_day: 10000
+  rate_limit_per_minute: 300
+  generations_per_day: 50
+  recipes_minted_per_month: 1200
+addons:
+- name: AI image credits
+  price: 125
+  unit: 500 credits

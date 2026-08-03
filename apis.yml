@@ -1,0 +1,120 @@
+aid: recipe-api
+url: https://raw.githubusercontent.com/api-evangelist/recipe-api/refs/heads/main/apis.yml
+name: Recipe API
+description: Recipe API is a B2B recipe and nutrition API providing structured recipes with comprehensive,
+  USDA-backed nutrition data — 32 nutrients per recipe, structured preparation steps, and per-100g nutrition
+  on individual ingredients. Beyond browsing and filtering an existing catalog by category, cuisine, dietary
+  flag and macro, it will generate a new recipe with nutrition on demand, and generate food photography
+  from a recipe. It positions itself as a lighter-weight alternative for developers who want clean recipe
+  data without much setup, and publishes both an llms.txt and an official MCP server so that AI clients
+  can use it directly. Self-serve from a free evaluation tier through to a paid scale tier, with a documented
+  keyless quick-start call so a developer can try the API before signing up.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/recipe-api.png
+created: '2026-08-03'
+modified: '2026-08-03'
+specificationVersion: '0.21'
+type: Index
+position: Producing
+access: 3rd-Party
+kind: contract
+tags:
+- Recipes
+- Food
+- Nutrition
+- Ingredients
+- Data
+- Generative AI
+- MCP
+- Agents
+apis:
+- aid: recipe-api:recipe-api
+  name: Recipe API
+  description: B2B Recipe API providing structured recipes with comprehensive nutrition data.
+  humanURL: https://recipe-api.com/docs
+  baseURL: https://recipe-api.com
+  tags:
+  - Recipes
+  - Nutrition
+  - Ingredients
+  - Discovery
+  - Generative AI
+  properties:
+  - url: openapi/recipe-api-openapi.json
+    type: OpenAPI
+  - url: https://recipe-api.com/openapi.json
+    type: X-OpenAPI-Source
+  - url: https://recipe-api.com/docs
+    type: Documentation
+  - url: https://recipe-api.com/signup
+    type: Signup
+  - url: https://recipe-api.com/login
+    type: Login
+  - url: https://recipe-api.com/pricing
+    type: Pricing
+  - url: https://recipe-api.com/terms
+    type: TermsOfService
+  - url: https://recipe-api.com/privacy
+    type: PrivacyPolicy
+  - url: authentication/recipe-api-authentication.yml
+    type: Authentication
+  - url: plans/recipe-api-plans.yml
+    type: Plans
+  - url: rate-limits/recipe-api-rate-limits.yml
+    type: RateLimits
+  - url: mcp/recipe-api-mcp.yml
+    type: MCPServer
+  - url: https://recipe-api.com/llms.txt
+    type: LlmsText
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+common:
+- url: https://recipe-api.com
+  type: Website
+- url: https://recipe-api.com/docs
+  type: Documentation
+- url: https://recipe-api.com/pricing
+  type: Pricing
+- url: https://recipe-api.com/signup
+  type: Signup
+- url: https://recipe-api.com/login
+  type: Login
+- url: https://recipe-api.com/terms
+  type: TermsOfService
+- url: https://recipe-api.com/privacy
+  type: PrivacyPolicy
+- url: https://recipe-api.com/llms.txt
+  type: LlmsText
+- url: mcp/recipe-api-mcp.yml
+  type: MCPServer
+- url: plans/recipe-api-plans.yml
+  type: Plans
+- url: rate-limits/recipe-api-rate-limits.yml
+  type: RateLimits
+- url: authentication/recipe-api-authentication.yml
+  type: Authentication
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+X-Discovery:
+  date: '2026-08-03'
+  method: probed
+  note: Provider wrote in to info@apievangelist.com. Every surface below was fetched before the profile
+    was written; nothing here is modelled on their behalf.
+  findings:
+  - surface: OpenAPI
+    url: https://recipe-api.com/openapi.json
+    http_status: 200
+    real: true
+    note: OpenAPI 3.0.3, 12 operations, 20 schemas, ApiKeyAuth, real server URL.
+  - surface: LlmsTxt
+    url: https://recipe-api.com/llms.txt
+    http_status: 200
+    real: true
+  - surface: MCPServer
+    url: https://recipe-api.com/api/mcp
+    http_status: 401
+    real: true
+    note: Exists and is auth-gated; documented at /mcp.
+  - surface: WellKnown
+    url: https://recipe-api.com/.well-known/api-catalog
+    http_status: 404
+    real: false

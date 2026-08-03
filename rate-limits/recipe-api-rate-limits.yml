@@ -1,0 +1,24 @@
+generated: '2026-08-03'
+method: searched
+status: published
+source: https://recipe-api.com/pricing
+description: Per-minute and per-day limits are published per plan on the pricing page.
+verified: '2026-08-03'
+evidence:
+- url: https://recipe-api.com/pricing
+  status: 200
+limits:
+- plan: Evaluation
+  per_minute: 10
+  per_day: 50
+- plan: Developer
+  per_minute: 20
+  per_day: 500
+- plan: Production
+  per_minute: 60
+  per_day: 2000
+- plan: Scale
+  per_minute: 300
+  per_day: 10000
+gaps:
+- Rate-limit response headers were not confirmed from the specification.
