@@ -27,45 +27,166 @@ tags:
 - MCP
 - Agents
 apis:
-- aid: recipe-api:recipe-api
-  name: Recipe API
-  description: B2B Recipe API providing structured recipes with comprehensive nutrition data.
+- aid: recipe-api:recipe-api-discovery-api
+  name: Recipe API Discovery API
+  description: Requires API key. No credit cost. Browse categories, cuisines, and dietary options.
+  humanURL: https://recipe-api.com/docs
+  baseURL: https://recipe-api.com
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/recipe-api-discovery-api-openapi.yml
+  - type: X-OpenAPI-Source
+    url: https://recipe-api.com/openapi.json
+  - type: Documentation
+    url: https://recipe-api.com/docs
+  - type: Signup
+    url: https://recipe-api.com/signup
+  - type: Login
+    url: https://recipe-api.com/login
+  - type: Pricing
+    url: https://recipe-api.com/pricing
+  - type: TermsOfService
+    url: https://recipe-api.com/terms
+  - type: PrivacyPolicy
+    url: https://recipe-api.com/privacy
+  - type: Authentication
+    url: authentication/recipe-api-authentication.yml
+  - type: Plans
+    url: plans/recipe-api-plans.yml
+  - type: RateLimits
+    url: rate-limits/recipe-api-rate-limits.yml
+  - type: LlmsText
+    url: https://recipe-api.com/llms.txt
+- aid: recipe-api:recipe-api-image-generation-api
+  name: Recipe API Image Generation API
+  description: The Image Generation API from Recipe API — 1 operation(s) for image generation.
+  humanURL: https://recipe-api.com/docs
+  baseURL: https://recipe-api.com
+  tags:
+  - Image Generation
+  properties:
+  - type: OpenAPI
+    url: openapi/recipe-api-image-generation-api-openapi.yml
+  - type: X-OpenAPI-Source
+    url: https://recipe-api.com/openapi.json
+  - type: Documentation
+    url: https://recipe-api.com/docs
+  - type: Signup
+    url: https://recipe-api.com/signup
+  - type: Login
+    url: https://recipe-api.com/login
+  - type: Pricing
+    url: https://recipe-api.com/pricing
+  - type: TermsOfService
+    url: https://recipe-api.com/terms
+  - type: PrivacyPolicy
+    url: https://recipe-api.com/privacy
+  - type: Authentication
+    url: authentication/recipe-api-authentication.yml
+  - type: Plans
+    url: plans/recipe-api-plans.yml
+  - type: RateLimits
+    url: rate-limits/recipe-api-rate-limits.yml
+  - type: LlmsText
+    url: https://recipe-api.com/llms.txt
+- aid: recipe-api:recipe-api-ingredients-api
+  name: Recipe API Ingredients API
+  description: Search ingredients free. Per-100g USDA nutrition by ID costs 1 credit.
+  humanURL: https://recipe-api.com/docs
+  baseURL: https://recipe-api.com
+  tags:
+  - Ingredients
+  properties:
+  - type: OpenAPI
+    url: openapi/recipe-api-ingredients-api-openapi.yml
+  - type: X-OpenAPI-Source
+    url: https://recipe-api.com/openapi.json
+  - type: Documentation
+    url: https://recipe-api.com/docs
+  - type: Signup
+    url: https://recipe-api.com/signup
+  - type: Login
+    url: https://recipe-api.com/login
+  - type: Pricing
+    url: https://recipe-api.com/pricing
+  - type: TermsOfService
+    url: https://recipe-api.com/terms
+  - type: PrivacyPolicy
+    url: https://recipe-api.com/privacy
+  - type: Authentication
+    url: authentication/recipe-api-authentication.yml
+  - type: Plans
+    url: plans/recipe-api-plans.yml
+  - type: RateLimits
+    url: rate-limits/recipe-api-rate-limits.yml
+  - type: LlmsText
+    url: https://recipe-api.com/llms.txt
+- aid: recipe-api:recipe-api-public-api
+  name: Recipe API Public API
+  description: No authentication required. Try `/api/v1/dinner` for a complete recipe example.
+  humanURL: https://recipe-api.com/docs
+  baseURL: https://recipe-api.com
+  tags:
+  - Public
+  properties:
+  - type: OpenAPI
+    url: openapi/recipe-api-public-api-openapi.yml
+  - type: X-OpenAPI-Source
+    url: https://recipe-api.com/openapi.json
+  - type: Documentation
+    url: https://recipe-api.com/docs
+  - type: Signup
+    url: https://recipe-api.com/signup
+  - type: Login
+    url: https://recipe-api.com/login
+  - type: Pricing
+    url: https://recipe-api.com/pricing
+  - type: TermsOfService
+    url: https://recipe-api.com/terms
+  - type: PrivacyPolicy
+    url: https://recipe-api.com/privacy
+  - type: Authentication
+    url: authentication/recipe-api-authentication.yml
+  - type: Plans
+    url: plans/recipe-api-plans.yml
+  - type: RateLimits
+    url: rate-limits/recipe-api-rate-limits.yml
+  - type: LlmsText
+    url: https://recipe-api.com/llms.txt
+- aid: recipe-api:recipe-api-recipes-api
+  name: Recipe API Recipes API
+  description: Browse recipes free. Full recipe detail costs 1 credit. Sample data shown inline.
   humanURL: https://recipe-api.com/docs
   baseURL: https://recipe-api.com
   tags:
   - Recipes
-  - Nutrition
-  - Ingredients
-  - Discovery
-  - Generative AI
   properties:
-  - url: openapi/recipe-api-openapi.json
-    type: OpenAPI
-  - url: https://recipe-api.com/openapi.json
-    type: X-OpenAPI-Source
-  - url: https://recipe-api.com/docs
-    type: Documentation
-  - url: https://recipe-api.com/signup
-    type: Signup
-  - url: https://recipe-api.com/login
-    type: Login
-  - url: https://recipe-api.com/pricing
-    type: Pricing
-  - url: https://recipe-api.com/terms
-    type: TermsOfService
-  - url: https://recipe-api.com/privacy
-    type: PrivacyPolicy
-  - url: authentication/recipe-api-authentication.yml
-    type: Authentication
-  - url: plans/recipe-api-plans.yml
-    type: Plans
-  - url: rate-limits/recipe-api-rate-limits.yml
-    type: RateLimits
-  - url: mcp/recipe-api-mcp.yml
-    type: MCPServer
-  - url: https://recipe-api.com/llms.txt
-    type: LlmsText
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  - type: OpenAPI
+    url: openapi/recipe-api-recipes-api-openapi.yml
+  - type: X-OpenAPI-Source
+    url: https://recipe-api.com/openapi.json
+  - type: Documentation
+    url: https://recipe-api.com/docs
+  - type: Signup
+    url: https://recipe-api.com/signup
+  - type: Login
+    url: https://recipe-api.com/login
+  - type: Pricing
+    url: https://recipe-api.com/pricing
+  - type: TermsOfService
+    url: https://recipe-api.com/terms
+  - type: PrivacyPolicy
+    url: https://recipe-api.com/privacy
+  - type: Authentication
+    url: authentication/recipe-api-authentication.yml
+  - type: Plans
+    url: plans/recipe-api-plans.yml
+  - type: RateLimits
+    url: rate-limits/recipe-api-rate-limits.yml
+  - type: LlmsText
+    url: https://recipe-api.com/llms.txt
 common:
 - url: https://recipe-api.com
   type: Website
