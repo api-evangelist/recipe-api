@@ -1,0 +1,414 @@
+openapi: 3.2.0
+info:
+  title: Recipe Discovery API
+  description: 'B2B Recipe API providing structured recipes with comprehensive nutrition data.
+
+
+    **Quick Start** - Try it now (no API key needed):
+
+    ```
+
+    curl https://recipe-api.com/api/v1/dinner
+
+    ```
+
+
+    **Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you''ll receive.
+
+
+    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).'
+  version: 1.0.0
+  contact:
+    email: paul@recipe-api.com
+servers:
+- url: https://recipe-api.com
+  description: Production
+tags:
+- name: Discovery
+  description: Requires API key. No credit cost. Browse categories, cuisines, and dietary options.
+paths:
+  /api/v1/categories:
+    get:
+      tags:
+      - Discovery
+      summary: List all categories
+      description: Returns all recipe categories with recipe counts. No credit cost.
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Dinner
+                        count:
+                          type: integer
+                          example: 245
+              example:
+                data:
+                - name: Dinner
+                  count: 847
+                - name: Breakfast
+                  count: 312
+                - name: Lunch
+                  count: 289
+                - name: Dessert
+                  count: 256
+                - name: Appetizer
+                  count: 198
+                - name: Snack
+                  count: 145
+                - name: Brunch
+                  count: 89
+                - name: Side Dish
+                  count: 76
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/cuisines:
+    get:
+      tags:
+      - Discovery
+      summary: List all cuisines
+      description: Returns all cuisines with recipe counts. No credit cost.
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: List of cuisines
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Italian
+                        count:
+                          type: integer
+                          example: 89
+              example:
+                data:
+                - name: Italian
+                  count: 234
+                - name: Mexican
+                  count: 198
+                - name: American
+                  count: 187
+                - name: Asian
+                  count: 156
+                - name: Mediterranean
+                  count: 134
+                - name: French
+                  count: 98
+                - name: Indian
+                  count: 89
+                - name: Japanese
+                  count: 76
+                - name: Thai
+                  count: 65
+                - name: Greek
+                  count: 54
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/dietary-flags:
+    get:
+      tags:
+      - Discovery
+      summary: List all dietary flags
+      description: Returns all dietary flags with recipe counts. No credit cost.
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: List of dietary flags
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Vegetarian
+                        count:
+                          type: integer
+                          example: 156
+              example:
+                data:
+                - name: Gluten-Free
+                  count: 456
+                - name: Vegetarian
+                  count: 387
+                - name: Dairy-Free
+                  count: 312
+                - name: Vegan
+                  count: 234
+                - name: Nut-Free
+                  count: 198
+                - name: Low-Carb
+                  count: 167
+                - name: Egg-Free
+                  count: 145
+                - name: Soy-Free
+                  count: 123
+                - name: Paleo
+                  count: 89
+                - name: Keto
+                  count: 67
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/ingredients:
+    get:
+      tags:
+      - Discovery
+      summary: Browse ingredients
+      description: Returns a paginated list of ingredients with optional filtering by name or category. No credit cost.
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: q
+        in: query
+        description: Search by ingredient name
+        schema:
+          type: string
+        example: chicken
+      - name: category
+        in: query
+        description: Filter by category
+        schema:
+          type: string
+        example: Legumes
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        description: Results per page
+        schema:
+          type: integer
+          default: 20
+          minimum: 1
+          maximum: 100
+      responses:
+        '200':
+          description: Paginated ingredient list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/IngredientItem'
+                  meta:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      page:
+                        type: integer
+                      per_page:
+                        type: integer
+              example:
+                data:
+                - id: 001764f3-4d44-4dbc-801b-0e4f094c756d
+                  name: Chickpeas, canned, drained
+                  category: Legumes
+                  source: USDA
+                - id: 0004d34a-afbe-4934-b94e-195e1602b23d
+                  name: Spelt, cooked
+                  category: Grains & Pasta
+                  source: USDA
+                - id: 0009da79-3cdb-4838-bdab-2e65ee0a9ccd
+                  name: Nashi pear
+                  category: Fruits
+                  source: Aggregated Public Sources
+                meta:
+                  total: 10441
+                  page: 1
+                  per_page: 20
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/ingredient-categories:
+    get:
+      tags:
+      - Discovery
+      summary: List all ingredient categories
+      description: Returns all ingredient categories with counts. No credit cost.
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: List of ingredient categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Vegetables
+                        count:
+                          type: integer
+                          example: 1200
+              example:
+                data:
+                - name: Vegetables
+                  count: 1283
+                - name: Beef
+                  count: 995
+                - name: Baked Goods
+                  count: 617
+                - name: Beverages
+                  count: 555
+                - name: Prepared Foods
+                  count: 530
+                - name: Sauces & Condiments
+                  count: 512
+                - name: Lamb & Game
+                  count: 504
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
+    RateLimited:
+      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            rate_limited:
+              summary: Per-minute rate limit exceeded
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Per-minute rate limit exceeded. Retry in a moment.
+            daily_limit:
+              summary: Daily request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Daily limit reached (500 recipes). Try again tomorrow.
+            monthly_limit:
+              summary: Monthly request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
+            unique_recipe_limit:
+              summary: Monthly unique recipe limit exceeded
+              value:
+                error:
+                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
+                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
+    Forbidden:
+      description: API key lacks permission
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: This endpoint requires a paid API key.
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    IngredientItem:
+      type: object
+      description: An ingredient from the master ingredients database
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ingredient identifier
+        name:
+          type: string
+          example: Chickpeas, canned, drained
+        category:
+          type: string
+          description: One of 23 canonical categories
+          example: Legumes
+        source:
+          type: string
+          description: 'Data source: USDA or Aggregated Public Sources'
+          example: USDA
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key in format `rapi_<key>`

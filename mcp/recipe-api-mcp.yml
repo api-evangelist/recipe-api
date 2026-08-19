@@ -3,9 +3,9 @@ method: probed
 status: published
 provider_published: true
 source: https://recipe-api.com/mcp
-description: An official Recipe API MCP server, documented for Claude and any MCP
-  client. The JSON-RPC endpoint answers 401 rather than 404, so it exists and is auth-gated
-  — the tool list could not be enumerated anonymously.
+description: An official Recipe API MCP server, documented for Claude and any MCP client. The JSON-RPC
+  endpoint answers 401 rather than 404, so it exists and is auth-gated — the tool list could not be enumerated
+  anonymously.
 verified: '2026-08-03'
 server:
   name: recipe-api
@@ -26,5 +26,12 @@ documented_tools:
 - filter_recipes
 - list_categories
 gaps:
-- Tool list not enumerable without a key, so the documented tools above are read from
-  the docs page rather than from a live tools/list response.
+- Tool list not enumerable without a key, so the documented tools above are read from the docs page rather
+  than from a live tools/list response.
+deployment:
+  mode: remote
+  endpoint: https://recipe-api.com/api/mcp
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

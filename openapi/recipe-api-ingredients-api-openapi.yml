@@ -1,0 +1,407 @@
+openapi: 3.2.0
+info:
+  title: Recipe Ingredients API
+  description: 'B2B Recipe API providing structured recipes with comprehensive nutrition data.
+
+
+    **Quick Start** - Try it now (no API key needed):
+
+    ```
+
+    curl https://recipe-api.com/api/v1/dinner
+
+    ```
+
+
+    **Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you''ll receive.
+
+
+    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).'
+  version: 1.0.0
+  contact:
+    email: paul@recipe-api.com
+servers:
+- url: https://recipe-api.com
+  description: Production
+tags:
+- name: Ingredients
+  description: Search ingredients free. Per-100g USDA nutrition by ID costs 1 credit.
+paths:
+  /api/v1/ingredients/{id}:
+    get:
+      tags:
+      - Ingredients
+      summary: Get ingredient with per-100g nutrition
+      description: Returns a single ingredient with its full per-100g USDA nutrition (32 nutrients). Discovery via `GET /api/v1/ingredients` is free; this endpoint returns the nutrition and **costs 1 credit.**
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Ingredient UUID (from the list endpoint)
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Ingredient with per-100g nutrition and usage info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/IngredientDetail'
+                  usage:
+                    $ref: '#/components/schemas/Usage'
+              example:
+                data:
+                  id: 001764f3-4d44-4dbc-801b-0e4f094c756d
+                  name: Chickpeas, canned, drained
+                  category: Legumes
+                  source: USDA
+                  nutrition:
+                    per_100g:
+                      calories: 139
+                      protein_g: 7.05
+                      carbohydrates_g: 22.5
+                      fat_g: 2.59
+                      fiber_g: 6.4
+                      sodium_mg: 262
+                    sources:
+                    - USDA FoodData Central
+                usage:
+                  monthly_remaining: 4999
+                  monthly_limit: 5000
+                  daily_remaining: 199
+                  daily_limit: 200
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    IngredientDetail:
+      type: object
+      description: A single ingredient with per-100g USDA nutrition (billable detail endpoint)
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Chickpeas, canned, drained
+        category:
+          type: string
+          example: Legumes
+        source:
+          type: string
+          description: 'Data source: USDA or Aggregated Public Sources'
+          example: USDA
+        nutrition:
+          type:
+          - object
+          - 'null'
+          description: Null only for the rare custom ingredient with no USDA match yet
+          properties:
+            per_100g:
+              $ref: '#/components/schemas/NutrientValues'
+            sources:
+              type: array
+              items:
+                type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    Usage:
+      type: object
+      description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
+      properties:
+        monthly_remaining:
+          type: integer
+          description: Requests remaining this billing period
+          example: 1950
+        monthly_limit:
+          type: integer
+          description: Total monthly quota
+          example: 2000
+        daily_remaining:
+          type: integer
+          description: Requests remaining today
+          example: 95
+        daily_limit:
+          type: integer
+          description: Maximum requests per day
+          example: 100
+        plan_key:
+          type: string
+          example: indie
+        plan_name:
+          type: string
+          example: Developer
+        period_type:
+          type: string
+          enum:
+          - evaluation
+          - rolling_period
+          - billing_period
+        detail_used:
+          type: integer
+          example: 51
+        detail_limit:
+          type: integer
+          example: 15000
+        detail_remaining:
+          type: integer
+          example: 14949
+        generation_used:
+          type: integer
+          example: 2
+        generation_limit:
+          type: integer
+          example: 150
+        generation_remaining:
+          type: integer
+          example: 148
+        generation_overage_remaining:
+          type: integer
+          example: 100
+        reset_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Null for lifetime evaluations
+        upgrade_url:
+          type: string
+          format: uri
+          example: https://recipe-api.com/pricing
+    NutrientValues:
+      type: object
+      description: The 32 USDA-tracked nutrients. Per serving on recipes; per 100g on ingredients.
+      properties:
+        calories:
+          type:
+          - number
+          - 'null'
+        protein_g:
+          type:
+          - number
+          - 'null'
+        carbohydrates_g:
+          type:
+          - number
+          - 'null'
+        fat_g:
+          type:
+          - number
+          - 'null'
+        saturated_fat_g:
+          type:
+          - number
+          - 'null'
+        trans_fat_g:
+          type:
+          - number
+          - 'null'
+        monounsaturated_fat_g:
+          type:
+          - number
+          - 'null'
+        polyunsaturated_fat_g:
+          type:
+          - number
+          - 'null'
+        fiber_g:
+          type:
+          - number
+          - 'null'
+        sugar_g:
+          type:
+          - number
+          - 'null'
+        sodium_mg:
+          type:
+          - number
+          - 'null'
+        cholesterol_mg:
+          type:
+          - number
+          - 'null'
+        potassium_mg:
+          type:
+          - number
+          - 'null'
+        calcium_mg:
+          type:
+          - number
+          - 'null'
+        iron_mg:
+          type:
+          - number
+          - 'null'
+        magnesium_mg:
+          type:
+          - number
+          - 'null'
+        phosphorus_mg:
+          type:
+          - number
+          - 'null'
+        zinc_mg:
+          type:
+          - number
+          - 'null'
+        vitamin_a_mcg:
+          type:
+          - number
+          - 'null'
+        vitamin_c_mg:
+          type:
+          - number
+          - 'null'
+        vitamin_d_mcg:
+          type:
+          - number
+          - 'null'
+        vitamin_e_mg:
+          type:
+          - number
+          - 'null'
+        vitamin_k_mcg:
+          type:
+          - number
+          - 'null'
+        vitamin_b6_mg:
+          type:
+          - number
+          - 'null'
+        vitamin_b12_mcg:
+          type:
+          - number
+          - 'null'
+        thiamin_mg:
+          type:
+          - number
+          - 'null'
+        riboflavin_mg:
+          type:
+          - number
+          - 'null'
+        niacin_mg:
+          type:
+          - number
+          - 'null'
+        folate_mcg:
+          type:
+          - number
+          - 'null'
+        water_g:
+          type:
+          - number
+          - 'null'
+        alcohol_g:
+          type:
+          - number
+          - 'null'
+        caffeine_mg:
+          type:
+          - number
+          - 'null'
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
+    RateLimited:
+      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            rate_limited:
+              summary: Per-minute rate limit exceeded
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Per-minute rate limit exceeded. Retry in a moment.
+            daily_limit:
+              summary: Daily request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Daily limit reached (500 recipes). Try again tomorrow.
+            monthly_limit:
+              summary: Monthly request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
+            unique_recipe_limit:
+              summary: Monthly unique recipe limit exceeded
+              value:
+                error:
+                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
+                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
+    Forbidden:
+      description: API key lacks permission
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: This endpoint requires a paid API key.
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: Invalid recipe ID format. Use UUID.
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key in format `rapi_<key>`

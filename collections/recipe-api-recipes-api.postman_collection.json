@@ -1,0 +1,1673 @@
+{
+  "item": [
+    {
+      "id": "a73803e1-1f7d-4626-a585-b83b930914e6",
+      "name": "Recipes",
+      "description": {
+        "content": "Browse recipes free. Full recipe detail costs 1 credit. Sample data shown inline.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "209afca1-b4eb-455e-bc8d-1c1a6a8e32da",
+          "name": "Browse and search recipes",
+          "request": {
+            "name": "Browse and search recipes",
+            "description": {
+              "content": "Returns a paginated list of recipes with optional filtering. Discovery limited to 500 recipes; use filters for larger catalogs. No credit cost.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "recipes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search by name or description"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Filter by category"
+                },
+                {
+                  "disabled": false,
+                  "key": "cuisine",
+                  "value": "<string>",
+                  "description": "Filter by cuisine"
+                },
+                {
+                  "disabled": false,
+                  "key": "difficulty",
+                  "value": "<string>",
+                  "description": "Filter by difficulty"
+                },
+                {
+                  "disabled": false,
+                  "key": "dietary",
+                  "value": "<string>",
+                  "description": "Filter by dietary flags (comma-separated)"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_calories",
+                  "value": "<number>",
+                  "description": "Minimum calories per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_calories",
+                  "value": "<number>",
+                  "description": "Maximum calories per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_protein",
+                  "value": "<number>",
+                  "description": "Minimum protein (g) per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_protein",
+                  "value": "<number>",
+                  "description": "Maximum protein (g) per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_carbs",
+                  "value": "<number>",
+                  "description": "Minimum carbohydrates (g) per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_carbs",
+                  "value": "<number>",
+                  "description": "Maximum carbohydrates (g) per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_fat",
+                  "value": "<number>",
+                  "description": "Minimum fat (g) per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_fat",
+                  "value": "<number>",
+                  "description": "Maximum fat (g) per serving"
+                },
+                {
+                  "disabled": false,
+                  "key": "ingredients",
+                  "value": "<string>",
+                  "description": "Comma-separated ingredient UUIDs (returns recipes containing ALL specified ingredients)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (discovery limited to 500 total recipes)"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Results per page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2c4b0c09-e23a-4643-9653-955cf5838c40",
+              "name": "Paginated recipe list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "Dinner"
+                    },
+                    {
+                      "key": "cuisine",
+                      "value": "Italian"
+                    },
+                    {
+                      "key": "difficulty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dietary",
+                      "value": "Vegetarian,Gluten-Free"
+                    },
+                    {
+                      "key": "min_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "ingredients",
+                      "value": "3c3f97d4-c951-43fd-865c-88fa8b445739,30109e1e-d8e8-4f76-a6f4-82ac5b071fde"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"a066f472-ed0c-46ea-8e2c-a0053c3183a8\",\n      \"name\": \"Texas Chili con Carne\",\n      \"description\": \"A thick, beef-based stew featuring tender cubes of meat in a rich sauce made from reconstituted whole chilies.\",\n      \"category\": \"Dinner\",\n      \"cuisine\": \"American\",\n      \"difficulty\": \"Intermediate\",\n      \"tags\": [\n        \"Beef\",\n        \"Slow-Cooked\",\n        \"High-Protein\",\n        \"Southwestern\"\n      ],\n      \"meta\": {\n        \"active_time\": \"PT20M\",\n        \"passive_time\": \"PT1H40M\",\n        \"total_time\": \"PT2H\",\n        \"overnight_required\": false,\n        \"yields\": \"4 servings\",\n        \"yield_count\": 4,\n        \"serving_size_g\": 300\n      },\n      \"dietary\": {\n        \"flags\": [\n          \"Gluten-Free\",\n          \"Dairy-Free\",\n          \"Nut-Free\"\n        ],\n        \"not_suitable_for\": []\n      },\n      \"nutrition_summary\": {\n        \"calories\": 569,\n        \"protein_g\": 44.1,\n        \"carbohydrates_g\": 5.6,\n        \"fat_g\": 42\n      }\n    },\n    {\n      \"id\": \"b177e583-fe1d-57fb-9f3d-b1164d4294b9\",\n      \"name\": \"Classic Margherita Pizza\",\n      \"description\": \"Traditional Neapolitan pizza with San Marzano tomatoes, fresh mozzarella, basil, and olive oil on a thin, crispy crust.\",\n      \"category\": \"Dinner\",\n      \"cuisine\": \"Italian\",\n      \"difficulty\": \"Easy\",\n      \"tags\": [\n        \"Vegetarian\",\n        \"Italian\",\n        \"Quick\"\n      ],\n      \"meta\": {\n        \"active_time\": \"PT25M\",\n        \"passive_time\": \"PT1H\",\n        \"total_time\": \"PT1H25M\",\n        \"overnight_required\": false,\n        \"yields\": \"2 pizzas\",\n        \"yield_count\": 2,\n        \"serving_size_g\": 250\n      },\n      \"dietary\": {\n        \"flags\": [\n          \"Vegetarian\",\n          \"Nut-Free\"\n        ],\n        \"not_suitable_for\": [\n          \"Lactose intolerant\"\n        ]\n      },\n      \"nutrition_summary\": {\n        \"calories\": 320,\n        \"protein_g\": 14.5,\n        \"carbohydrates_g\": 38.2,\n        \"fat_g\": 12.8\n      }\n    }\n  ],\n  \"meta\": {\n    \"total\": 500,\n    \"page\": 1,\n    \"per_page\": 20,\n    \"total_capped\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aff884c7-b71e-4bf2-a8b0-6d3d43d4cb4e",
+              "name": "Discovery limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "Dinner"
+                    },
+                    {
+                      "key": "cuisine",
+                      "value": "Italian"
+                    },
+                    {
+                      "key": "difficulty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dietary",
+                      "value": "Vegetarian,Gluten-Free"
+                    },
+                    {
+                      "key": "min_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "ingredients",
+                      "value": "3c3f97d4-c951-43fd-865c-88fa8b445739,30109e1e-d8e8-4f76-a6f4-82ac5b071fde"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"DISCOVERY_LIMIT_EXCEEDED\",\n    \"message\": \"Page exceeds discovery limit. Maximum 500 recipes accessible. Use filters to narrow results.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e948bc96-0a1e-4ef2-a4e4-fe274fd091f0",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "Dinner"
+                    },
+                    {
+                      "key": "cuisine",
+                      "value": "Italian"
+                    },
+                    {
+                      "key": "difficulty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dietary",
+                      "value": "Vegetarian,Gluten-Free"
+                    },
+                    {
+                      "key": "min_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "ingredients",
+                      "value": "3c3f97d4-c951-43fd-865c-88fa8b445739,30109e1e-d8e8-4f76-a6f4-82ac5b071fde"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"Missing X-API-Key header\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f5c9eb1-27d7-4dc4-84d3-8943db3cb7db",
+              "name": "API key lacks permission",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "Dinner"
+                    },
+                    {
+                      "key": "cuisine",
+                      "value": "Italian"
+                    },
+                    {
+                      "key": "difficulty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dietary",
+                      "value": "Vegetarian,Gluten-Free"
+                    },
+                    {
+                      "key": "min_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "ingredients",
+                      "value": "3c3f97d4-c951-43fd-865c-88fa8b445739,30109e1e-d8e8-4f76-a6f4-82ac5b071fde"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"This endpoint requires a paid API key.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19208b3b-8f74-45e7-979b-bdc0f1008d42",
+              "name": "Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "Dinner"
+                    },
+                    {
+                      "key": "cuisine",
+                      "value": "Italian"
+                    },
+                    {
+                      "key": "difficulty",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dietary",
+                      "value": "Vegetarian,Gluten-Free"
+                    },
+                    {
+                      "key": "min_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_calories",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_protein",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_carbs",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "min_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_fat",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "ingredients",
+                      "value": "3c3f97d4-c951-43fd-865c-88fa8b445739,30109e1e-d8e8-4f76-a6f4-82ac5b071fde"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)",
+                  "key": "Retry-After",
+                  "value": "628"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMITED\",\n    \"message\": \"Per-minute rate limit exceeded. Retry in a moment.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0217f0cb-1123-49f5-8694-704dc5e7fe13",
+          "name": "Get full recipe by ID",
+          "request": {
+            "name": "Get full recipe by ID",
+            "description": {
+              "content": "Returns complete recipe details including ingredients, instructions, and nutrition. **Costs 1 credit.**",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "recipes",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) Recipe UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b7407d77-4264-4566-afab-d703390ba429",
+              "name": "Full recipe details with usage info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Recipe UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"a066f472-ed0c-46ea-8e2c-a0053c3183a8\",\n    \"name\": \"Texas Chili con Carne\",\n    \"description\": \"A thick, beef-based stew featuring tender cubes of meat in a rich sauce made from reconstituted whole chilies and aromatic spices without beans or tomatoes.\",\n    \"category\": \"Dinner\",\n    \"cuisine\": \"American\",\n    \"difficulty\": \"Intermediate\",\n    \"tags\": [\n      \"Beef\",\n      \"Slow-Cooked\",\n      \"High-Protein\",\n      \"Southwestern\"\n    ],\n    \"meta\": {\n      \"active_time\": \"PT20M\",\n      \"passive_time\": \"PT1H40M\",\n      \"total_time\": \"PT2H\",\n      \"overnight_required\": false,\n      \"yields\": \"4 servings\",\n      \"yield_count\": 4,\n      \"serving_size_g\": 300\n    },\n    \"dietary\": {\n      \"flags\": [\n        \"Gluten-Free\",\n        \"Dairy-Free\",\n        \"Egg-Free\",\n        \"Nut-Free\",\n        \"Peanut-Free\",\n        \"Soy-Free\"\n      ],\n      \"not_suitable_for\": []\n    },\n    \"storage\": {\n      \"refrigerator\": {\n        \"duration\": \"P4D\",\n        \"notes\": \"Flavor improves after 24 hours.\"\n      },\n      \"freezer\": {\n        \"duration\": \"P3M\",\n        \"notes\": \"Thaw overnight in refrigerator before reheating.\"\n      },\n      \"reheating\": \"Heat in a saucepan over medium-low heat, adding a splash of water if too thick.\",\n      \"does_not_keep\": false\n    },\n    \"equipment\": [\n      {\n        \"name\": \"Blender\",\n        \"required\": true,\n        \"alternative\": \"Food processor or mortar and pestle\"\n      },\n      {\n        \"name\": \"Heavy skillet\",\n        \"required\": true,\n        \"alternative\": \"Dutch oven or heavy-bottomed pot\"\n      },\n      {\n        \"name\": \"Mixing bowl\",\n        \"required\": true,\n        \"alternative\": null\n      }\n    ],\n    \"ingredients\": [\n      {\n        \"group_name\": \"Chili Base\",\n        \"items\": [\n          {\n            \"name\": \"red chilies\",\n            \"quantity\": 6,\n            \"unit\": null,\n            \"preparation\": \"dried\",\n            \"notes\": \"about 30g\",\n            \"substitutions\": [],\n            \"ingredient_id\": \"3c3f97d4-c951-43fd-865c-88fa8b445739\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"stewing beef\",\n            \"quantity\": 910,\n            \"unit\": \"g\",\n            \"preparation\": \"cut into 1.3cm (1/2 inch) cubes\",\n            \"notes\": null,\n            \"substitutions\": [],\n            \"ingredient_id\": \"09f2eef4-739a-4fca-8b63-97d697257990\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"olive oil\",\n            \"quantity\": 15,\n            \"unit\": \"ml\",\n            \"preparation\": null,\n            \"notes\": null,\n            \"substitutions\": [],\n            \"ingredient_id\": \"e9f370c4-07c8-4d8d-8a9f-0edea38db44c\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"bay leaves\",\n            \"quantity\": 2,\n            \"unit\": null,\n            \"preparation\": null,\n            \"notes\": null,\n            \"substitutions\": [],\n            \"ingredient_id\": \"eab2ef3a-7a0e-4188-b746-645b795ada1e\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          }\n        ]\n      },\n      {\n        \"group_name\": \"Flavor Paste\",\n        \"items\": [\n          {\n            \"name\": \"garlic\",\n            \"quantity\": 2,\n            \"unit\": null,\n            \"preparation\": \"peeled\",\n            \"notes\": \"about 6g\",\n            \"substitutions\": [],\n            \"ingredient_id\": \"30109e1e-d8e8-4f76-a6f4-82ac5b071fde\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"cumin\",\n            \"quantity\": 7,\n            \"unit\": \"g\",\n            \"preparation\": null,\n            \"notes\": null,\n            \"substitutions\": [],\n            \"ingredient_id\": \"b9c9e3cb-61b7-4bbc-87c0-7858d42d7935\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"oregano\",\n            \"quantity\": 3,\n            \"unit\": \"g\",\n            \"preparation\": null,\n            \"notes\": null,\n            \"substitutions\": [],\n            \"ingredient_id\": \"687f54eb-e811-4e5e-ac2e-e2735458480c\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"paprika\",\n            \"quantity\": 14,\n            \"unit\": \"g\",\n            \"preparation\": null,\n            \"notes\": null,\n            \"substitutions\": [],\n            \"ingredient_id\": \"f4c3bdd7-6528-40d2-84b3-a6325df15e8e\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"sugar\",\n            \"quantity\": 4,\n            \"unit\": \"g\",\n            \"preparation\": null,\n            \"notes\": null,\n            \"substitutions\": [],\n            \"ingredient_id\": \"8ae7f905-b311-4f45-9527-5e3840369506\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"salt\",\n            \"quantity\": null,\n            \"unit\": null,\n            \"preparation\": null,\n            \"notes\": \"to taste\",\n            \"substitutions\": [],\n            \"ingredient_id\": \"2631739c-2de4-4389-a6e3-ed3d06d0406f\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"black pepper\",\n            \"quantity\": null,\n            \"unit\": null,\n            \"preparation\": null,\n            \"notes\": \"to taste\",\n            \"substitutions\": [],\n            \"ingredient_id\": \"c25dc1c9-4ea7-403c-976e-ab1d06578b7a\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          }\n        ]\n      }\n    ],\n    \"instructions\": [\n      {\n        \"step_number\": 1,\n        \"phase\": \"prep\",\n        \"text\": \"Tear the dried chilies into strips and place them in a bowl. Cover with 240ml (1 cup) of boiling water and soak for 30 minutes.\",\n        \"structured\": {\n          \"action\": \"SOAK\",\n          \"temperature\": null,\n          \"duration\": \"PT30M\",\n          \"doneness_cues\": null\n        },\n        \"tips\": []\n      },\n      {\n        \"step_number\": 2,\n        \"phase\": \"prep\",\n        \"text\": \"Drain the chilies and set them aside. Reserve the soaking liquid for the cooking process.\",\n        \"structured\": {\n          \"action\": \"DRAIN\",\n          \"temperature\": null,\n          \"duration\": null,\n          \"doneness_cues\": null\n        },\n        \"tips\": []\n      },\n      {\n        \"step_number\": 3,\n        \"phase\": \"cook\",\n        \"text\": \"Heat olive oil in a heavy skillet over medium-high heat. Brown the beef cubes on all sides until a crust forms.\",\n        \"structured\": {\n          \"action\": \"SEAR\",\n          \"temperature\": null,\n          \"duration\": null,\n          \"doneness_cues\": {\n            \"visual\": \"Beef is deeply browned on all sides\",\n            \"tactile\": null\n          }\n        },\n        \"tips\": []\n      },\n      {\n        \"step_number\": 4,\n        \"phase\": \"cook\",\n        \"text\": \"Pour the reserved chili soaking liquid into the skillet. Add bay leaves and bring the liquid to a boil.\",\n        \"structured\": {\n          \"action\": \"BOIL\",\n          \"temperature\": null,\n          \"duration\": null,\n          \"doneness_cues\": null\n        },\n        \"tips\": []\n      },\n      {\n        \"step_number\": 5,\n        \"phase\": \"cook\",\n        \"text\": \"Reduce the heat to low, cover the skillet, and simmer for 1 hour.\",\n        \"structured\": {\n          \"action\": \"SIMMER\",\n          \"temperature\": {\n            \"celsius\": 90,\n            \"fahrenheit\": 194\n          },\n          \"duration\": \"PT1H\",\n          \"doneness_cues\": null\n        },\n        \"tips\": []\n      },\n      {\n        \"step_number\": 6,\n        \"phase\": \"prep\",\n        \"text\": \"Combine the soaked chilies, garlic, cumin, oregano, paprika, sugar, salt, and pepper in a blender. Puree until smooth, adding a small amount of fresh water if the mixture is too thick.\",\n        \"structured\": {\n          \"action\": \"PUREE\",\n          \"temperature\": null,\n          \"duration\": null,\n          \"doneness_cues\": null\n        },\n        \"tips\": []\n      },\n      {\n        \"step_number\": 7,\n        \"phase\": \"cook\",\n        \"text\": \"Stir the chili puree into the skillet with the beef. Cover and continue to simmer for 30 minutes.\",\n        \"structured\": {\n          \"action\": \"SIMMER\",\n          \"temperature\": null,\n          \"duration\": \"PT30M\",\n          \"doneness_cues\": {\n            \"visual\": null,\n            \"tactile\": \"Beef cubes are fork-tender\"\n          }\n        },\n        \"tips\": []\n      },\n      {\n        \"step_number\": 8,\n        \"phase\": \"finish\",\n        \"text\": \"Remove and discard the bay leaves. Taste and add more salt or pepper if needed before serving.\",\n        \"structured\": {\n          \"action\": \"SERVE\",\n          \"temperature\": null,\n          \"duration\": null,\n          \"doneness_cues\": null\n        },\n        \"tips\": []\n      }\n    ],\n    \"troubleshooting\": [\n      {\n        \"symptom\": \"Beef is tough or chewy\",\n        \"likely_cause\": \"The meat has not simmered long enough to break down connective tissue.\",\n        \"prevention\": \"Ensure the liquid is at a very low simmer and the lid is tightly sealed.\",\n        \"fix\": \"Continue simmering in 15-minute increments until tender.\"\n      },\n      {\n        \"symptom\": \"Chili is too watery\",\n        \"likely_cause\": \"Too much water added during blending or insufficient reduction.\",\n        \"prevention\": \"Add water to the blender only 15ml at a time.\",\n        \"fix\": \"Simmer uncovered for the final 15 minutes to evaporate excess moisture.\"\n      }\n    ],\n    \"chef_notes\": [\n      \"For the deepest chili flavor, use a variety of dried chilies like ancho, guajillo, and pasilla. Toasting them briefly before soaking can enhance their aroma.\",\n      \"Don't overcrowd the skillet when browning the beef; sear in batches if necessary to ensure a good crust, which adds significant flavor to the final dish.\",\n      \"The simmering time is crucial for tenderizing the beef. Low and slow is key; the meat should be easily pierced with a fork.\",\n      \"The consistency of the chili can be adjusted by the amount of soaking liquid you use and the final simmering time. If it's too thick, add a splash of water or beef broth; if too thin, simmer uncovered for a bit longer.\"\n    ],\n    \"cultural_context\": \"Texas Chili, or Chili con Carne, is a hearty stew deeply rooted in Texan culinary tradition. Its origins trace back to the mid-19th century, with early versions featuring simple ingredients like dried beef, chilies, and spices, cooked by cowboys and ranchers. The absence of beans and tomatoes is a defining characteristic, distinguishing it from other regional chili variations and emphasizing its pure, meat-and-chili flavor profile.\",\n    \"nutrition\": {\n      \"per_serving\": {\n        \"calories\": 569.02,\n        \"protein_g\": 44.14,\n        \"carbohydrates_g\": 5.59,\n        \"fat_g\": 41.99,\n        \"saturated_fat_g\": 16.48,\n        \"trans_fat_g\": 2.39,\n        \"monounsaturated_fat_g\": 20.66,\n        \"polyunsaturated_fat_g\": 2.29,\n        \"fiber_g\": 1.97,\n        \"sugar_g\": 1.84,\n        \"sodium_mg\": 350.75,\n        \"cholesterol_mg\": 154.7,\n        \"potassium_mg\": 903.3,\n        \"calcium_mg\": 74.24,\n        \"iron_mg\": 7.16,\n        \"magnesium_mg\": 60.57,\n        \"phosphorus_mg\": 434.12,\n        \"zinc_mg\": 16.82,\n        \"vitamin_a_mcg\": 101.01,\n        \"vitamin_c_mg\": 11.51,\n        \"vitamin_d_mcg\": 0.23,\n        \"vitamin_e_mg\": 2.15,\n        \"vitamin_k_mcg\": 14.73,\n        \"vitamin_b6_mg\": 0.97,\n        \"vitamin_b12_mcg\": 6.14,\n        \"thiamin_mg\": 0.19,\n        \"riboflavin_mg\": 0.38,\n        \"niacin_mg\": 10.47,\n        \"folate_mcg\": 12.53,\n        \"water_g\": 154.87,\n        \"alcohol_g\": null,\n        \"caffeine_mg\": null\n      },\n      \"sources\": [\n        \"USDA FoodData Central\"\n      ]\n    }\n  },\n  \"usage\": {\n    \"monthly_remaining\": 1950,\n    \"monthly_limit\": 2000,\n    \"daily_remaining\": 95,\n    \"daily_limit\": 100\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fef8503-34ec-42fb-8e66-b7d5fd8b92e1",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Recipe UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"BAD_REQUEST\",\n    \"message\": \"Invalid recipe ID format. Use UUID.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc41e572-41cc-49d6-a62a-6ad991674229",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Recipe UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"Missing X-API-Key header\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9127d74f-15e7-4d15-b61c-6641d578c4f2",
+              "name": "API key lacks permission",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Recipe UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"This endpoint requires a paid API key.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63034bca-f059-47eb-9964-9399c7739ec2",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Recipe UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"NOT_FOUND\",\n    \"message\": \"Recipe not found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4637d22a-d357-4f18-88e4-38453a78581e",
+              "name": "Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "recipes",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) Recipe UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)",
+                  "key": "Retry-After",
+                  "value": "628"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"RATE_LIMITED\",\n    \"message\": \"Per-minute rate limit exceeded. Retry in a moment.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec59d8e1-80fa-4aef-9399-603563c2e4f6",
+          "name": "Generate a recipe with nutrition",
+          "request": {
+            "name": "Generate a recipe with nutrition",
+            "description": {
+              "content": "Creates a new recipe from a title and required ingredients, optionally guided by cuisine, difficulty, equipment, time, and notes. Requires generate credits separate from normal request limits. A generate credit is consumed after request validation succeeds, before model and nutrition work begins.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "generate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "dry_run",
+                  "value": "<boolean>",
+                  "description": "Return usage and generated content without persisting. Only available when ENABLE_GENERATE_DRY_RUN=true."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"key_ingredients\": [\n    \"<string>\"\n  ],\n  \"cuisine\": \"<string>\",\n  \"difficulty\": \"<string>\",\n  \"equipment\": [\n    \"<string>\"\n  ],\n  \"time\": \"<integer>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da826fdd-b7f3-4fba-896a-8e2519924888",
+              "name": "Generated recipe",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"e4e5de62-94f1-ce13-76bc-f2b79988b333\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"category\": \"string\",\n    \"cuisine\": \"string\",\n    \"difficulty\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"meta\": {\n      \"active_time\": \"PT45M\",\n      \"passive_time\": \"PT30M\",\n      \"total_time\": \"PT1H15M\",\n      \"overnight_required\": true,\n      \"yields\": \"4 servings\",\n      \"yield_count\": 4,\n      \"serving_size_g\": 285\n    },\n    \"dietary\": {\n      \"flags\": [\n        \"Vegetarian\",\n        \"Gluten-Free\"\n      ],\n      \"not_suitable_for\": [\n        \"Nut allergy\"\n      ]\n    },\n    \"storage\": {\n      \"refrigerator\": {\n        \"duration\": \"P3D\",\n        \"notes\": \"string\"\n      },\n      \"freezer\": {\n        \"duration\": \"P2M\",\n        \"notes\": \"string\"\n      },\n      \"reheating\": null,\n      \"does_not_keep\": true\n    },\n    \"equipment\": [\n      {\n        \"name\": \"Stand mixer\",\n        \"required\": false,\n        \"alternative\": \"Hand mixer\"\n      },\n      {\n        \"name\": \"Stand mixer\",\n        \"required\": true,\n        \"alternative\": \"Hand mixer\"\n      }\n    ],\n    \"ingredients\": [\n      {\n        \"group_name\": \"For the dough\",\n        \"items\": [\n          {\n            \"name\": \"all-purpose flour\",\n            \"quantity\": 2.5,\n            \"unit\": \"cups\",\n            \"preparation\": \"sifted\",\n            \"notes\": null,\n            \"substitutions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"ingredient_id\": null,\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"all-purpose flour\",\n            \"quantity\": 2.5,\n            \"unit\": \"cups\",\n            \"preparation\": \"sifted\",\n            \"notes\": null,\n            \"substitutions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"ingredient_id\": \"4709a560-1c51-afac-c088-95e470510096\",\n            \"nutrition_source\": \"USDA FoodData Central\"\n          }\n        ]\n      },\n      {\n        \"group_name\": \"For the dough\",\n        \"items\": [\n          {\n            \"name\": \"all-purpose flour\",\n            \"quantity\": 2.5,\n            \"unit\": \"cups\",\n            \"preparation\": \"sifted\",\n            \"notes\": \"string\",\n            \"substitutions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"ingredient_id\": null,\n            \"nutrition_source\": \"USDA FoodData Central\"\n          },\n          {\n            \"name\": \"all-purpose flour\",\n            \"quantity\": 2.5,\n            \"unit\": \"cups\",\n            \"preparation\": \"sifted\",\n            \"notes\": null,\n            \"substitutions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"ingredient_id\": null,\n            \"nutrition_source\": \"USDA FoodData Central\"\n          }\n        ]\n      }\n    ],\n    \"instructions\": [\n      {\n        \"step_number\": 9893,\n        \"phase\": \"prep\",\n        \"text\": \"string\",\n        \"structured\": {\n          \"action\": \"ROAST\",\n          \"temperature\": {\n            \"celsius\": 200,\n            \"fahrenheit\": 392\n          },\n          \"duration\": \"PT25M\",\n          \"doneness_cues\": {\n            \"visual\": \"Golden brown edges\",\n            \"tactile\": \"Springs back when pressed\"\n          }\n        },\n        \"tips\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"step_number\": 5412,\n        \"phase\": \"prep\",\n        \"text\": \"string\",\n        \"structured\": {\n          \"action\": \"ROAST\",\n          \"temperature\": {\n            \"celsius\": 200,\n            \"fahrenheit\": 392\n          },\n          \"duration\": \"PT25M\",\n          \"doneness_cues\": {\n            \"visual\": \"Golden brown edges\",\n            \"tactile\": \"Springs back when pressed\"\n          }\n        },\n        \"tips\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"troubleshooting\": [\n      {\n        \"symptom\": \"Dough too sticky\",\n        \"likely_cause\": \"Too much water or humidity\",\n        \"prevention\": \"Add flour gradually, check humidity\",\n        \"fix\": \"Dust with flour while kneading\"\n      },\n      {\n        \"symptom\": \"Dough too sticky\",\n        \"likely_cause\": \"Too much water or humidity\",\n        \"prevention\": \"Add flour gradually, check humidity\",\n        \"fix\": \"Dust with flour while kneading\"\n      }\n    ],\n    \"chef_notes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"cultural_context\": \"string\",\n    \"nutrition\": {\n      \"per_serving\": {\n        \"calories\": 8413.952198611301,\n        \"protein_g\": 8806.89707908634,\n        \"carbohydrates_g\": null,\n        \"fat_g\": 3413.001554834428,\n        \"saturated_fat_g\": null,\n        \"trans_fat_g\": null,\n        \"monounsaturated_fat_g\": null,\n        \"polyunsaturated_fat_g\": null,\n        \"fiber_g\": 3414.2819667694566,\n        \"sugar_g\": 3908.4311853224217,\n        \"sodium_mg\": 9736.589802321514,\n        \"cholesterol_mg\": null,\n        \"potassium_mg\": 1282.7656132612296,\n        \"calcium_mg\": 7888.839385809199,\n        \"iron_mg\": null,\n        \"magnesium_mg\": null,\n        \"phosphorus_mg\": 5596.878559707885,\n        \"zinc_mg\": 6709.806487866464,\n        \"vitamin_a_mcg\": 7014.077968568434,\n        \"vitamin_c_mg\": 1705.6005972041687,\n        \"vitamin_d_mcg\": 9457.289251728205,\n        \"vitamin_e_mg\": 184.35122433254514,\n        \"vitamin_k_mcg\": null,\n        \"vitamin_b6_mg\": null,\n        \"vitamin_b12_mcg\": 2707.6849220238396,\n        \"thiamin_mg\": 8854.653383030314,\n        \"riboflavin_mg\": null,\n        \"niacin_mg\": null,\n        \"folate_mcg\": null,\n        \"water_g\": 1784.046938099072,\n        \"alcohol_g\": null,\n        \"caffeine_mg\": 740.7601837861599\n      },\n      \"sources\": [\n        \"USDA FoodData Central\"\n      ]\n    }\n  },\n  \"usage\": {\n    \"monthly_remaining\": 1950,\n    \"monthly_limit\": 2000,\n    \"daily_remaining\": 95,\n    \"daily_limit\": 100,\n    \"plan_key\": \"indie\",\n    \"plan_name\": \"Developer\",\n    \"period_type\": \"rolling_period\",\n    \"detail_used\": 51,\n    \"detail_limit\": 15000,\n    \"detail_remaining\": 14949,\n    \"generation_used\": 2,\n    \"generation_limit\": 150,\n    \"generation_remaining\": 148,\n    \"generation_overage_remaining\": 100,\n    \"reset_at\": \"2025-10-03T09:48:54.258Z\",\n    \"upgrade_url\": \"https://recipe-api.com/pricing\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f907bde2-79c8-4042-b2b0-b3df58b57046",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"BAD_REQUEST\",\n    \"message\": \"Invalid recipe ID format. Use UUID.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2f4686e-f424-4108-8d0c-c3b46edd604d",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"UNAUTHORIZED\",\n    \"message\": \"Missing X-API-Key header\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f90089d6-3af2-41a0-916d-cbe3316be29d",
+              "name": "API key lacks permission",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"FORBIDDEN\",\n    \"message\": \"This endpoint requires a paid API key.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b4f1fab-65c7-424c-a083-78ea16cd8e4d",
+              "name": "Nutrition matching incomplete. One or more generated ingredients could not be matched to a nutrition source, so the recipe was not stored. Note: the generate credit is consumed after request validation, so this failure occurs after the credit has been spent and it is not refunded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"NUTRITION_MATCH_INCOMPLETE\",\n    \"message\": \"All ingredients must match nutrition sources.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42a59416-d2c6-4d9c-8f81-a129a865d1e4",
+              "name": "Generate limit reached. Returned when daily or monthly generate credits are exhausted, when the per-minute rate limit is hit, or when recipe generation is not included in your plan.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)",
+                  "key": "Retry-After",
+                  "value": "628"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"GENERATE_LIMIT_EXCEEDED\",\n    \"message\": \"Daily generate limit reached (10). Try again tomorrow.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "252dc795-9aa9-4b8f-9ec9-7d7c750c8b08",
+              "name": "Generation pipeline error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"GENERATION_FAILED\",\n    \"message\": \"Failed to generate recipe.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04e09361-19c3-44e2-a46d-b1be21164497",
+              "name": "Generation output invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "dry_run",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Lemon Herb Chicken\",\n  \"key_ingredients\": [\n    \"chicken breast\",\n    \"lemon\",\n    \"garlic\",\n    \"olive oil\"\n  ],\n  \"cuisine\": \"Mediterranean\",\n  \"difficulty\": \"Easy\",\n  \"equipment\": [\n    \"skillet\"\n  ],\n  \"time\": 35,\n  \"notes\": \"Weeknight-friendly, bright and zesty.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_RECIPE_OUTPUT\",\n    \"message\": \"Generated recipe did not match required schema.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://recipe-api.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e6c852f4-3179-4129-a561-43510a78aba3",
+    "name": "Recipe Recipes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "B2B Recipe API providing structured recipes with comprehensive nutrition data.\n\n**Quick Start** - Try it now (no API key needed):\n```\ncurl https://recipe-api.com/api/v1/dinner\n```\n\n**Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you'll receive.\n\n**Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).\n\nContact Support:\n Email: paul@recipe-api.com",
+      "type": "text/plain"
+    }
+  }
+}

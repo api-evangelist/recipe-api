@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Recipe Image Generation API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Image Generation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate food photography from a recipe",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://recipe-api.com/api/v1/image-generate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a photorealistic AI food photograph for an existing recipe. Requires image credits purchased from the dashboard by paid plans. Requests count against your plan's shared per-minute rate limit."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Recipe Ingredients API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ingredients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get ingredient with per-100g nutrition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/ingredients/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Ingredient UUID (from the list endpoint)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a single ingredient with its full per-100g USDA nutrition (32 nutrients). Discovery via `GET /api/v1/ingredients` is free; this endpoint returns the nutrition and **costs 1 credit.**"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

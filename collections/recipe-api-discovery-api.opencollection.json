@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Recipe Discovery API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/categories",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all recipe categories with recipe counts. No credit cost."
+        },
+        {
+          "info": {
+            "name": "List all cuisines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/cuisines",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all cuisines with recipe counts. No credit cost."
+        },
+        {
+          "info": {
+            "name": "List all dietary flags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/dietary-flags",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all dietary flags with recipe counts. No credit cost."
+        },
+        {
+          "info": {
+            "name": "Browse ingredients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/ingredients",
+            "params": [
+              {
+                "name": "q",
+                "value": "chicken",
+                "type": "query",
+                "description": "Search by ingredient name"
+              },
+              {
+                "name": "category",
+                "value": "Legumes",
+                "type": "query",
+                "description": "Filter by category"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of ingredients with optional filtering by name or category. No credit cost."
+        },
+        {
+          "info": {
+            "name": "List all ingredient categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/ingredient-categories",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all ingredient categories with counts. No credit cost."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

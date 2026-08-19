@@ -1,0 +1,611 @@
+openapi: 3.2.0
+info:
+  title: Recipe Public API
+  description: 'B2B Recipe API providing structured recipes with comprehensive nutrition data.
+
+
+    **Quick Start** - Try it now (no API key needed):
+
+    ```
+
+    curl https://recipe-api.com/api/v1/dinner
+
+    ```
+
+
+    **Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you''ll receive.
+
+
+    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).'
+  version: 1.0.0
+  contact:
+    email: paul@recipe-api.com
+servers:
+- url: https://recipe-api.com
+  description: Production
+tags:
+- name: Public
+  description: No authentication required. Try `/api/v1/dinner` for a complete recipe example.
+paths:
+  /health:
+    get:
+      tags:
+      - Public
+      summary: Health check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    format: date-time
+  /api/v1/dinner:
+    get:
+      tags:
+      - Public
+      summary: What's for dinner?
+      description: 'Returns a single delicious dinner recipe with all fields. Perfect for testing the API schema. Try it: `curl https://recipe-api.com/api/v1/dinner`'
+      responses:
+        '200':
+          description: A complete recipe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+              example:
+                id: a066f472-ed0c-46ea-8e2c-a0053c3183a8
+                name: Texas Chili con Carne
+                description: A thick, beef-based stew featuring tender cubes of meat in a rich sauce made from reconstituted whole chilies and aromatic spices without beans or tomatoes.
+                category: Dinner
+                cuisine: American
+                difficulty: Intermediate
+                tags:
+                - Beef
+                - Slow-Cooked
+                - High-Protein
+                - Southwestern
+                meta:
+                  active_time: PT20M
+                  passive_time: PT1H40M
+                  total_time: PT2H
+                  overnight_required: false
+                  yields: 4 servings
+                  yield_count: 4
+                  serving_size_g: 300
+                dietary:
+                  flags:
+                  - Gluten-Free
+                  - Dairy-Free
+                  - Egg-Free
+                  - Nut-Free
+                  - Soy-Free
+                  not_suitable_for: []
+                storage:
+                  refrigerator:
+                    duration: P4D
+                    notes: Flavor improves after 24 hours.
+                  freezer:
+                    duration: P3M
+                    notes: Thaw overnight in refrigerator before reheating.
+                  reheating: Heat in a saucepan over medium-low heat, adding a splash of water if too thick.
+                  does_not_keep: false
+                equipment:
+                - name: Blender
+                  required: true
+                  alternative: Food processor or mortar and pestle
+                - name: Heavy skillet
+                  required: true
+                  alternative: Dutch oven
+                ingredients:
+                - group_name: Chili Base
+                  items:
+                  - name: dried red chilies
+                    quantity: 6
+                    unit: null
+                    preparation: stemmed and seeded
+                    notes: about 30g
+                    substitutions:
+                    - ancho chilies
+                    - guajillo chilies
+                    ingredient_id: 3c3f97d4-c951-43fd-865c-88fa8b445739
+                    nutrition_source: USDA FoodData Central
+                  - name: stewing beef
+                    quantity: 910
+                    unit: g
+                    preparation: cut into 1.3cm cubes
+                    notes: null
+                    substitutions: []
+                    ingredient_id: 09f2eef4-739a-4fca-8b63-97d697257990
+                    nutrition_source: USDA FoodData Central
+                - group_name: Flavor Paste
+                  items:
+                  - name: garlic
+                    quantity: 2
+                    unit: cloves
+                    preparation: peeled
+                    notes: null
+                    substitutions: []
+                    ingredient_id: 30109e1e-d8e8-4f76-a6f4-82ac5b071fde
+                    nutrition_source: USDA FoodData Central
+                  - name: cumin
+                    quantity: 7
+                    unit: g
+                    preparation: null
+                    notes: null
+                    substitutions: []
+                    ingredient_id: b9c9e3cb-61b7-4bbc-87c0-7858d42d7935
+                    nutrition_source: USDA FoodData Central
+                instructions:
+                - step_number: 1
+                  phase: prep
+                  text: Tear the dried chilies into strips and place them in a bowl. Cover with 240ml of boiling water and soak for 30 minutes.
+                  structured:
+                    action: SOAK
+                    temperature: null
+                    duration: PT30M
+                    doneness_cues: null
+                  tips: []
+                - step_number: 2
+                  phase: cook
+                  text: Heat olive oil in a heavy skillet over medium-high heat. Brown the beef cubes on all sides until a crust forms.
+                  structured:
+                    action: SEAR
+                    temperature: null
+                    duration: null
+                    doneness_cues:
+                      visual: Beef is deeply browned on all sides
+                      tactile: null
+                  tips: []
+                - step_number: 3
+                  phase: cook
+                  text: Reduce heat to low, cover, and simmer for 1 hour until beef is fork-tender.
+                  structured:
+                    action: SIMMER
+                    temperature:
+                      celsius: 90
+                      fahrenheit: 194
+                    duration: PT1H
+                    doneness_cues:
+                      visual: null
+                      tactile: Beef cubes are fork-tender
+                  tips: []
+                troubleshooting:
+                - symptom: Beef is tough or chewy
+                  likely_cause: The meat has not simmered long enough.
+                  prevention: Ensure liquid is at a very low simmer with lid sealed.
+                  fix: Continue simmering in 15-minute increments until tender.
+                chef_notes:
+                - For deeper flavor, use a variety of dried chilies like ancho, guajillo, and pasilla.
+                cultural_context: Texas Chili is a hearty stew deeply rooted in Texan culinary tradition, distinguished by the absence of beans and tomatoes.
+                nutrition:
+                  per_serving:
+                    calories: 569
+                    protein_g: 44.1
+                    carbohydrates_g: 5.6
+                    fat_g: 42
+                    saturated_fat_g: 16.5
+                    fiber_g: 2
+                    sodium_mg: 351
+                    cholesterol_mg: 155
+                    potassium_mg: 903
+                    iron_mg: 7.2
+                    vitamin_b12_mcg: 6.1
+                  sources:
+                  - USDA FoodData Central
+components:
+  schemas:
+    Instruction:
+      type: object
+      properties:
+        step_number:
+          type: integer
+        phase:
+          type: string
+          example: prep
+          description: 'One of: prep, cook, assemble, finish'
+        text:
+          type: string
+        structured:
+          $ref: '#/components/schemas/StructuredStep'
+        tips:
+          type: array
+          items:
+            type: string
+    Ingredient:
+      type: object
+      properties:
+        name:
+          type: string
+          example: all-purpose flour
+        quantity:
+          type:
+          - number
+          - 'null'
+          example: 2.5
+        unit:
+          type:
+          - string
+          - 'null'
+          example: cups
+        preparation:
+          type:
+          - string
+          - 'null'
+          example: sifted
+        notes:
+          type:
+          - string
+          - 'null'
+        substitutions:
+          type: array
+          items:
+            type: string
+        ingredient_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        nutrition_source:
+          type:
+          - string
+          - 'null'
+          example: USDA FoodData Central
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        cuisine:
+          type: string
+        difficulty:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/RecipeMeta'
+        dietary:
+          $ref: '#/components/schemas/Dietary'
+        storage:
+          $ref: '#/components/schemas/Storage'
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientGroup'
+        instructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instruction'
+        troubleshooting:
+          type: array
+          items:
+            $ref: '#/components/schemas/Troubleshooting'
+        chef_notes:
+          type: array
+          items:
+            type: string
+        cultural_context:
+          type:
+          - string
+          - 'null'
+        nutrition:
+          $ref: '#/components/schemas/Nutrition'
+    StructuredStep:
+      type:
+      - object
+      - 'null'
+      properties:
+        action:
+          type: string
+          example: ROAST
+        temperature:
+          type:
+          - object
+          - 'null'
+          properties:
+            celsius:
+              type: integer
+              example: 200
+            fahrenheit:
+              type: integer
+              example: 392
+        duration:
+          type:
+          - string
+          - 'null'
+          description: ISO 8601 duration
+          example: PT25M
+        doneness_cues:
+          type:
+          - object
+          - 'null'
+          properties:
+            visual:
+              type:
+              - string
+              - 'null'
+              example: Golden brown edges
+            tactile:
+              type:
+              - string
+              - 'null'
+              example: Springs back when pressed
+    RecipeMeta:
+      type: object
+      description: Timing and yield information
+      properties:
+        active_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT45M
+        passive_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT30M
+        total_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT1H15M
+        overnight_required:
+          type: boolean
+        yields:
+          type: string
+          example: 4 servings
+        yield_count:
+          type: integer
+          example: 4
+        serving_size_g:
+          type:
+          - number
+          - 'null'
+          example: 285
+    Nutrition:
+      type: object
+      properties:
+        per_serving:
+          type: object
+          properties:
+            calories:
+              type:
+              - number
+              - 'null'
+            protein_g:
+              type:
+              - number
+              - 'null'
+            carbohydrates_g:
+              type:
+              - number
+              - 'null'
+            fat_g:
+              type:
+              - number
+              - 'null'
+            saturated_fat_g:
+              type:
+              - number
+              - 'null'
+            trans_fat_g:
+              type:
+              - number
+              - 'null'
+            monounsaturated_fat_g:
+              type:
+              - number
+              - 'null'
+            polyunsaturated_fat_g:
+              type:
+              - number
+              - 'null'
+            fiber_g:
+              type:
+              - number
+              - 'null'
+            sugar_g:
+              type:
+              - number
+              - 'null'
+            sodium_mg:
+              type:
+              - number
+              - 'null'
+            cholesterol_mg:
+              type:
+              - number
+              - 'null'
+            potassium_mg:
+              type:
+              - number
+              - 'null'
+            calcium_mg:
+              type:
+              - number
+              - 'null'
+            iron_mg:
+              type:
+              - number
+              - 'null'
+            magnesium_mg:
+              type:
+              - number
+              - 'null'
+            phosphorus_mg:
+              type:
+              - number
+              - 'null'
+            zinc_mg:
+              type:
+              - number
+              - 'null'
+            vitamin_a_mcg:
+              type:
+              - number
+              - 'null'
+            vitamin_c_mg:
+              type:
+              - number
+              - 'null'
+            vitamin_d_mcg:
+              type:
+              - number
+              - 'null'
+            vitamin_e_mg:
+              type:
+              - number
+              - 'null'
+            vitamin_k_mcg:
+              type:
+              - number
+              - 'null'
+            vitamin_b6_mg:
+              type:
+              - number
+              - 'null'
+            vitamin_b12_mcg:
+              type:
+              - number
+              - 'null'
+            thiamin_mg:
+              type:
+              - number
+              - 'null'
+            riboflavin_mg:
+              type:
+              - number
+              - 'null'
+            niacin_mg:
+              type:
+              - number
+              - 'null'
+            folate_mcg:
+              type:
+              - number
+              - 'null'
+            water_g:
+              type:
+              - number
+              - 'null'
+            alcohol_g:
+              type:
+              - number
+              - 'null'
+            caffeine_mg:
+              type:
+              - number
+              - 'null'
+        sources:
+          type: array
+          items:
+            type: string
+          example:
+          - USDA FoodData Central
+    Equipment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Stand mixer
+        required:
+          type: boolean
+        alternative:
+          type:
+          - string
+          - 'null'
+          example: Hand mixer
+    IngredientGroup:
+      type: object
+      properties:
+        group_name:
+          type: string
+          example: For the dough
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient'
+    Dietary:
+      type: object
+      properties:
+        flags:
+          type: array
+          items:
+            type: string
+          example:
+          - Vegetarian
+          - Gluten-Free
+        not_suitable_for:
+          type: array
+          items:
+            type: string
+          example:
+          - Nut allergy
+    Storage:
+      type: object
+      properties:
+        refrigerator:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P3D
+            notes:
+              type: string
+        freezer:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P2M
+            notes:
+              type: string
+        reheating:
+          type:
+          - string
+          - 'null'
+        does_not_keep:
+          type: boolean
+    Troubleshooting:
+      type: object
+      properties:
+        symptom:
+          type: string
+          example: Dough too sticky
+        likely_cause:
+          type: string
+          example: Too much water or humidity
+        prevention:
+          type: string
+          example: Add flour gradually, check humidity
+        fix:
+          type: string
+          example: Dust with flour while kneading
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key in format `rapi_<key>`

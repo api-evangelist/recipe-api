@@ -1,0 +1,29 @@
+{
+  "provider": "recipe-api",
+  "sources": [
+    "recipe-api-discovery-api-openapi.yml",
+    "recipe-api-image-generation-api-openapi.yml",
+    "recipe-api-ingredients-api-openapi.yml",
+    "recipe-api-public-api-openapi.yml",
+    "recipe-api-recipes-api-openapi.yml"
+  ],
+  "outputs": [
+    "recipe-api-discovery-api-openapi.yml",
+    "recipe-api-image-generation-api-openapi.yml",
+    "recipe-api-ingredients-api-openapi.yml",
+    "recipe-api-public-api-openapi.yml",
+    "recipe-api-recipes-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "recipe-api-discovery-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "recipe-api-image-generation-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "recipe-api-ingredients-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "recipe-api-public-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "recipe-api-recipes-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

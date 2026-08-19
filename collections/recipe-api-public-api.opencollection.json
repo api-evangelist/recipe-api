@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Recipe Public API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/health"
+          },
+          "docs": "Health check"
+        },
+        {
+          "info": {
+            "name": "What's for dinner?",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/dinner"
+          },
+          "docs": "Returns a single delicious dinner recipe with all fields. Perfect for testing the API schema. Try it: `curl https://recipe-api.com/api/v1/dinner`"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

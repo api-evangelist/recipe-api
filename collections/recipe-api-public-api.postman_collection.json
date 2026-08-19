@@ -1,0 +1,173 @@
+{
+  "item": [
+    {
+      "id": "2ca9785e-80d5-4e50-be8e-9a81bace9340",
+      "name": "Public",
+      "description": {
+        "content": "No authentication required. Try `/api/v1/dinner` for a complete recipe example.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "785aa20b-8ad4-43ba-92fb-c5809cd20fbe",
+          "name": "Health check",
+          "request": {
+            "name": "Health check",
+            "description": {},
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f899b7ed-9086-47b3-b23d-6ed5d2a196a6",
+              "name": "Service is healthy",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"timestamp\": \"2002-11-30T00:15:19.243Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae5cff33-8a58-49e8-b3ef-5dcda9a16ab3",
+          "name": "What's for dinner?",
+          "request": {
+            "name": "What's for dinner?",
+            "description": {
+              "content": "Returns a single delicious dinner recipe with all fields. Perfect for testing the API schema. Try it: `curl https://recipe-api.com/api/v1/dinner`",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "dinner"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7933bcc-1499-4860-ae5e-ec1bca69f0a5",
+              "name": "A complete recipe",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "dinner"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"a066f472-ed0c-46ea-8e2c-a0053c3183a8\",\n  \"name\": \"Texas Chili con Carne\",\n  \"description\": \"A thick, beef-based stew featuring tender cubes of meat in a rich sauce made from reconstituted whole chilies and aromatic spices without beans or tomatoes.\",\n  \"category\": \"Dinner\",\n  \"cuisine\": \"American\",\n  \"difficulty\": \"Intermediate\",\n  \"tags\": [\n    \"Beef\",\n    \"Slow-Cooked\",\n    \"High-Protein\",\n    \"Southwestern\"\n  ],\n  \"meta\": {\n    \"active_time\": \"PT20M\",\n    \"passive_time\": \"PT1H40M\",\n    \"total_time\": \"PT2H\",\n    \"overnight_required\": false,\n    \"yields\": \"4 servings\",\n    \"yield_count\": 4,\n    \"serving_size_g\": 300\n  },\n  \"dietary\": {\n    \"flags\": [\n      \"Gluten-Free\",\n      \"Dairy-Free\",\n      \"Egg-Free\",\n      \"Nut-Free\",\n      \"Soy-Free\"\n    ],\n    \"not_suitable_for\": []\n  },\n  \"storage\": {\n    \"refrigerator\": {\n      \"duration\": \"P4D\",\n      \"notes\": \"Flavor improves after 24 hours.\"\n    },\n    \"freezer\": {\n      \"duration\": \"P3M\",\n      \"notes\": \"Thaw overnight in refrigerator before reheating.\"\n    },\n    \"reheating\": \"Heat in a saucepan over medium-low heat, adding a splash of water if too thick.\",\n    \"does_not_keep\": false\n  },\n  \"equipment\": [\n    {\n      \"name\": \"Blender\",\n      \"required\": true,\n      \"alternative\": \"Food processor or mortar and pestle\"\n    },\n    {\n      \"name\": \"Heavy skillet\",\n      \"required\": true,\n      \"alternative\": \"Dutch oven\"\n    }\n  ],\n  \"ingredients\": [\n    {\n      \"group_name\": \"Chili Base\",\n      \"items\": [\n        {\n          \"name\": \"dried red chilies\",\n          \"quantity\": 6,\n          \"unit\": null,\n          \"preparation\": \"stemmed and seeded\",\n          \"notes\": \"about 30g\",\n          \"substitutions\": [\n            \"ancho chilies\",\n            \"guajillo chilies\"\n          ],\n          \"ingredient_id\": \"3c3f97d4-c951-43fd-865c-88fa8b445739\",\n          \"nutrition_source\": \"USDA FoodData Central\"\n        },\n        {\n          \"name\": \"stewing beef\",\n          \"quantity\": 910,\n          \"unit\": \"g\",\n          \"preparation\": \"cut into 1.3cm cubes\",\n          \"notes\": null,\n          \"substitutions\": [],\n          \"ingredient_id\": \"09f2eef4-739a-4fca-8b63-97d697257990\",\n          \"nutrition_source\": \"USDA FoodData Central\"\n        }\n      ]\n    },\n    {\n      \"group_name\": \"Flavor Paste\",\n      \"items\": [\n        {\n          \"name\": \"garlic\",\n          \"quantity\": 2,\n          \"unit\": \"cloves\",\n          \"preparation\": \"peeled\",\n          \"notes\": null,\n          \"substitutions\": [],\n          \"ingredient_id\": \"30109e1e-d8e8-4f76-a6f4-82ac5b071fde\",\n          \"nutrition_source\": \"USDA FoodData Central\"\n        },\n        {\n          \"name\": \"cumin\",\n          \"quantity\": 7,\n          \"unit\": \"g\",\n          \"preparation\": null,\n          \"notes\": null,\n          \"substitutions\": [],\n          \"ingredient_id\": \"b9c9e3cb-61b7-4bbc-87c0-7858d42d7935\",\n          \"nutrition_source\": \"USDA FoodData Central\"\n        }\n      ]\n    }\n  ],\n  \"instructions\": [\n    {\n      \"step_number\": 1,\n      \"phase\": \"prep\",\n      \"text\": \"Tear the dried chilies into strips and place them in a bowl. Cover with 240ml of boiling water and soak for 30 minutes.\",\n      \"structured\": {\n        \"action\": \"SOAK\",\n        \"temperature\": null,\n        \"duration\": \"PT30M\",\n        \"doneness_cues\": null\n      },\n      \"tips\": []\n    },\n    {\n      \"step_number\": 2,\n      \"phase\": \"cook\",\n      \"text\": \"Heat olive oil in a heavy skillet over medium-high heat. Brown the beef cubes on all sides until a crust forms.\",\n      \"structured\": {\n        \"action\": \"SEAR\",\n        \"temperature\": null,\n        \"duration\": null,\n        \"doneness_cues\": {\n          \"visual\": \"Beef is deeply browned on all sides\",\n          \"tactile\": null\n        }\n      },\n      \"tips\": []\n    },\n    {\n      \"step_number\": 3,\n      \"phase\": \"cook\",\n      \"text\": \"Reduce heat to low, cover, and simmer for 1 hour until beef is fork-tender.\",\n      \"structured\": {\n        \"action\": \"SIMMER\",\n        \"temperature\": {\n          \"celsius\": 90,\n          \"fahrenheit\": 194\n        },\n        \"duration\": \"PT1H\",\n        \"doneness_cues\": {\n          \"visual\": null,\n          \"tactile\": \"Beef cubes are fork-tender\"\n        }\n      },\n      \"tips\": []\n    }\n  ],\n  \"troubleshooting\": [\n    {\n      \"symptom\": \"Beef is tough or chewy\",\n      \"likely_cause\": \"The meat has not simmered long enough.\",\n      \"prevention\": \"Ensure liquid is at a very low simmer with lid sealed.\",\n      \"fix\": \"Continue simmering in 15-minute increments until tender.\"\n    }\n  ],\n  \"chef_notes\": [\n    \"For deeper flavor, use a variety of dried chilies like ancho, guajillo, and pasilla.\"\n  ],\n  \"cultural_context\": \"Texas Chili is a hearty stew deeply rooted in Texan culinary tradition, distinguished by the absence of beans and tomatoes.\",\n  \"nutrition\": {\n    \"per_serving\": {\n      \"calories\": 569,\n      \"protein_g\": 44.1,\n      \"carbohydrates_g\": 5.6,\n      \"fat_g\": 42,\n      \"saturated_fat_g\": 16.5,\n      \"fiber_g\": 2,\n      \"sodium_mg\": 351,\n      \"cholesterol_mg\": 155,\n      \"potassium_mg\": 903,\n      \"iron_mg\": 7.2,\n      \"vitamin_b12_mcg\": 6.1\n    },\n    \"sources\": [\n      \"USDA FoodData Central\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://recipe-api.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4f08ad4f-ea8f-4fa0-aa28-1a77ece39435",
+    "name": "Recipe Public API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "B2B Recipe API providing structured recipes with comprehensive nutrition data.\n\n**Quick Start** - Try it now (no API key needed):\n```\ncurl https://recipe-api.com/api/v1/dinner\n```\n\n**Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you'll receive.\n\n**Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).\n\nContact Support:\n Email: paul@recipe-api.com",
+      "type": "text/plain"
+    }
+  }
+}

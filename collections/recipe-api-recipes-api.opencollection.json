@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Recipe Recipes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recipes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Browse and search recipes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/recipes",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search by name or description"
+              },
+              {
+                "name": "category",
+                "value": "Dinner",
+                "type": "query",
+                "description": "Filter by category"
+              },
+              {
+                "name": "cuisine",
+                "value": "Italian",
+                "type": "query",
+                "description": "Filter by cuisine"
+              },
+              {
+                "name": "difficulty",
+                "value": "",
+                "type": "query",
+                "description": "Filter by difficulty"
+              },
+              {
+                "name": "dietary",
+                "value": "Vegetarian,Gluten-Free",
+                "type": "query",
+                "description": "Filter by dietary flags (comma-separated)"
+              },
+              {
+                "name": "min_calories",
+                "value": "",
+                "type": "query",
+                "description": "Minimum calories per serving"
+              },
+              {
+                "name": "max_calories",
+                "value": "",
+                "type": "query",
+                "description": "Maximum calories per serving"
+              },
+              {
+                "name": "min_protein",
+                "value": "",
+                "type": "query",
+                "description": "Minimum protein (g) per serving"
+              },
+              {
+                "name": "max_protein",
+                "value": "",
+                "type": "query",
+                "description": "Maximum protein (g) per serving"
+              },
+              {
+                "name": "min_carbs",
+                "value": "",
+                "type": "query",
+                "description": "Minimum carbohydrates (g) per serving"
+              },
+              {
+                "name": "max_carbs",
+                "value": "",
+                "type": "query",
+                "description": "Maximum carbohydrates (g) per serving"
+              },
+              {
+                "name": "min_fat",
+                "value": "",
+                "type": "query",
+                "description": "Minimum fat (g) per serving"
+              },
+              {
+                "name": "max_fat",
+                "value": "",
+                "type": "query",
+                "description": "Maximum fat (g) per serving"
+              },
+              {
+                "name": "ingredients",
+                "value": "3c3f97d4-c951-43fd-865c-88fa8b445739,30109e1e-d8e8-4f76-a6f4-82ac5b071fde",
+                "type": "query",
+                "description": "Comma-separated ingredient UUIDs (returns recipes containing ALL specified ingredients)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number (discovery limited to 500 total recipes)"
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Results per page"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of recipes with optional filtering. Discovery limited to 500 recipes; use filters for larger catalogs. No credit cost."
+        },
+        {
+          "info": {
+            "name": "Get full recipe by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://recipe-api.com/api/v1/recipes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Recipe UUID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns complete recipe details including ingredients, instructions, and nutrition. **Costs 1 credit.**"
+        },
+        {
+          "info": {
+            "name": "Generate a recipe with nutrition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://recipe-api.com/api/v1/generate",
+            "params": [
+              {
+                "name": "dry_run",
+                "value": "",
+                "type": "query",
+                "description": "Return usage and generated content without persisting. Only available when ENABLE_GENERATE_DRY_RUN=true."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new recipe from a title and required ingredients, optionally guided by cuisine, difficulty, equipment, time, and notes. Requires generate credits separate from normal request limits. A generate credit is consumed after request validation succeeds, before model and nutrition work begins."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
