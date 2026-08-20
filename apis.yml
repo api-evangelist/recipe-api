@@ -65,6 +65,8 @@ apis:
   humanURL: https://recipe-api.com/docs
   baseURL: https://recipe-api.com
   tags:
+  - Image-Generation
+  tags_raw:
   - Image Generation
   properties:
   - type: OpenAPI
