@@ -9,6 +9,18 @@ description: Recipe API is a B2B recipe and nutrition API providing structured r
   data without much setup, and publishes both an llms.txt and an official MCP server so that AI clients
   can use it directly. Self-serve from a free evaluation tier through to a paid scale tier, with a documented
   keyless quick-start call so a developer can try the API before signing up.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/recipe-api.png
 created: '2026-08-03'
 modified: '2026-08-03'
