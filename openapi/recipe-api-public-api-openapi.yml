@@ -218,45 +218,47 @@ components:
           type: array
           items:
             type: string
-    Ingredient:
+    Storage:
       type: object
       properties:
-        name:
+        refrigerator:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P3D
+            notes:
+              type: string
+        freezer:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P2M
+            notes:
+              type: string
+        reheating:
+          type:
+          - string
+          - 'null'
+        does_not_keep:
+          type: boolean
+    IngredientGroup:
+      type: object
+      properties:
+        group_name:
           type: string
-          example: all-purpose flour
-        quantity:
-          type:
-          - number
-          - 'null'
-          example: 2.5
-        unit:
-          type:
-          - string
-          - 'null'
-          example: cups
-        preparation:
-          type:
-          - string
-          - 'null'
-          example: sifted
-        notes:
-          type:
-          - string
-          - 'null'
-        substitutions:
+          example: For the dough
+        items:
           type: array
           items:
-            type: string
-        ingredient_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        nutrition_source:
-          type:
-          - string
-          - 'null'
-          example: USDA FoodData Central
+            $ref: '#/components/schemas/Ingredient'
     Recipe:
       type: object
       properties:
@@ -309,75 +311,21 @@ components:
           - 'null'
         nutrition:
           $ref: '#/components/schemas/Nutrition'
-    StructuredStep:
-      type:
-      - object
-      - 'null'
-      properties:
-        action:
-          type: string
-          example: ROAST
-        temperature:
-          type:
-          - object
-          - 'null'
-          properties:
-            celsius:
-              type: integer
-              example: 200
-            fahrenheit:
-              type: integer
-              example: 392
-        duration:
-          type:
-          - string
-          - 'null'
-          description: ISO 8601 duration
-          example: PT25M
-        doneness_cues:
-          type:
-          - object
-          - 'null'
-          properties:
-            visual:
-              type:
-              - string
-              - 'null'
-              example: Golden brown edges
-            tactile:
-              type:
-              - string
-              - 'null'
-              example: Springs back when pressed
-    RecipeMeta:
+    Troubleshooting:
       type: object
-      description: Timing and yield information
       properties:
-        active_time:
+        symptom:
           type: string
-          description: ISO 8601 duration
-          example: PT45M
-        passive_time:
+          example: Dough too sticky
+        likely_cause:
           type: string
-          description: ISO 8601 duration
-          example: PT30M
-        total_time:
+          example: Too much water or humidity
+        prevention:
           type: string
-          description: ISO 8601 duration
-          example: PT1H15M
-        overnight_required:
-          type: boolean
-        yields:
+          example: Add flour gradually, check humidity
+        fix:
           type: string
-          example: 4 servings
-        yield_count:
-          type: integer
-          example: 4
-        serving_size_g:
-          type:
-          - number
-          - 'null'
-          example: 285
+          example: Dust with flour while kneading
     Nutrition:
       type: object
       properties:
@@ -531,16 +479,74 @@ components:
           - string
           - 'null'
           example: Hand mixer
-    IngredientGroup:
+    Ingredient:
       type: object
       properties:
-        group_name:
+        name:
           type: string
-          example: For the dough
-        items:
+          example: all-purpose flour
+        quantity:
+          type:
+          - number
+          - 'null'
+          example: 2.5
+        unit:
+          type:
+          - string
+          - 'null'
+          example: cups
+        preparation:
+          type:
+          - string
+          - 'null'
+          example: sifted
+        notes:
+          type:
+          - string
+          - 'null'
+        substitutions:
           type: array
           items:
-            $ref: '#/components/schemas/Ingredient'
+            type: string
+        ingredient_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        nutrition_source:
+          type:
+          - string
+          - 'null'
+          example: USDA FoodData Central
+    RecipeMeta:
+      type: object
+      description: Timing and yield information
+      properties:
+        active_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT45M
+        passive_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT30M
+        total_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT1H15M
+        overnight_required:
+          type: boolean
+        yields:
+          type: string
+          example: 4 servings
+        yield_count:
+          type: integer
+          example: 4
+        serving_size_g:
+          type:
+          - number
+          - 'null'
+          example: 285
     Dietary:
       type: object
       properties:
@@ -557,52 +563,46 @@ components:
             type: string
           example:
           - Nut allergy
-    Storage:
-      type: object
+    StructuredStep:
+      type:
+      - object
+      - 'null'
       properties:
-        refrigerator:
+        action:
+          type: string
+          example: ROAST
+        temperature:
           type:
           - object
           - 'null'
           properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P3D
-            notes:
-              type: string
-        freezer:
-          type:
-          - object
-          - 'null'
-          properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P2M
-            notes:
-              type: string
-        reheating:
+            celsius:
+              type: integer
+              example: 200
+            fahrenheit:
+              type: integer
+              example: 392
+        duration:
           type:
           - string
           - 'null'
-        does_not_keep:
-          type: boolean
-    Troubleshooting:
-      type: object
-      properties:
-        symptom:
-          type: string
-          example: Dough too sticky
-        likely_cause:
-          type: string
-          example: Too much water or humidity
-        prevention:
-          type: string
-          example: Add flour gradually, check humidity
-        fix:
-          type: string
-          example: Dust with flour while kneading
+          description: ISO 8601 duration
+          example: PT25M
+        doneness_cues:
+          type:
+          - object
+          - 'null'
+          properties:
+            visual:
+              type:
+              - string
+              - 'null'
+              example: Golden brown edges
+            tactile:
+              type:
+              - string
+              - 'null'
+              example: Springs back when pressed
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -87,6 +87,83 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
+    Forbidden:
+      description: API key lacks permission
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: This endpoint requires a paid API key.
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: Invalid recipe ID format. Use UUID.
+    RateLimited:
+      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            rate_limited:
+              summary: Per-minute rate limit exceeded
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Per-minute rate limit exceeded. Retry in a moment.
+            daily_limit:
+              summary: Daily request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Daily limit reached (500 recipes). Try again tomorrow.
+            monthly_limit:
+              summary: Monthly request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
+            unique_recipe_limit:
+              summary: Monthly unique recipe limit exceeded
+              value:
+                error:
+                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
+                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
   schemas:
     IngredientDetail:
       type: object
@@ -117,16 +194,6 @@ components:
               type: array
               items:
                 type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     Usage:
       type: object
       description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
@@ -322,83 +389,16 @@ components:
           type:
           - number
           - 'null'
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: UNAUTHORIZED
-              message: Missing X-API-Key header
-    RateLimited:
-      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            rate_limited:
-              summary: Per-minute rate limit exceeded
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Per-minute rate limit exceeded. Retry in a moment.
-            daily_limit:
-              summary: Daily request quota exhausted
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Daily limit reached (500 recipes). Try again tomorrow.
-            monthly_limit:
-              summary: Monthly request quota exhausted
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
-            unique_recipe_limit:
-              summary: Monthly unique recipe limit exceeded
-              value:
-                error:
-                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
-                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
-      headers:
-        Retry-After:
-          schema:
-            type: integer
-          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
-    Forbidden:
-      description: API key lacks permission
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: FORBIDDEN
-              message: This endpoint requires a paid API key.
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: BAD_REQUEST
-              message: Invalid recipe ID format. Use UUID.
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

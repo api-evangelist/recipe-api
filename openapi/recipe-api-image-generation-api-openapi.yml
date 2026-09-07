@@ -155,16 +155,6 @@ components:
             error:
               code: UNAUTHORIZED
               message: Missing X-API-Key header
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: BAD_REQUEST
-              message: Invalid recipe ID format. Use UUID.
     NotFound:
       description: Resource not found
       content:
@@ -175,17 +165,17 @@ components:
             error:
               code: NOT_FOUND
               message: Recipe not found
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: Invalid recipe ID format. Use UUID.
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     ImageGenerateRequest:
       type: object
       required:
@@ -205,6 +195,16 @@ components:
           - '16:9'
           default: '4:3'
           description: Aspect ratio of the generated image
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

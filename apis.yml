@@ -216,6 +216,10 @@ apis:
   - type: LlmsText
     url: https://recipe-api.com/llms.txt
 common:
+- type: DomainSecurity
+  url: security/recipe-api-domain-security.yml
+- type: PublicAPIsListing
+  url: https://github.com/public-apis/public-apis
 - url: https://recipe-api.com
   type: Website
 - url: https://recipe-api.com/docs

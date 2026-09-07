@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Recipe Recipes API
+  title: Recipes API
   description: 'B2B Recipe API providing structured recipes with comprehensive nutrition data.
 
 
@@ -675,94 +675,115 @@ paths:
                   code: INVALID_RECIPE_OUTPUT
                   message: Generated recipe did not match required schema.
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: Invalid recipe ID format. Use UUID.
+    Forbidden:
+      description: API key lacks permission
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: This endpoint requires a paid API key.
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
+    RateLimited:
+      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            rate_limited:
+              summary: Per-minute rate limit exceeded
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Per-minute rate limit exceeded. Retry in a moment.
+            daily_limit:
+              summary: Daily request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Daily limit reached (500 recipes). Try again tomorrow.
+            monthly_limit:
+              summary: Monthly request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
+            unique_recipe_limit:
+              summary: Monthly unique recipe limit exceeded
+              value:
+                error:
+                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
+                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
   schemas:
-    Ingredient:
+    Storage:
       type: object
       properties:
-        name:
-          type: string
-          example: all-purpose flour
-        quantity:
-          type:
-          - number
-          - 'null'
-          example: 2.5
-        unit:
-          type:
-          - string
-          - 'null'
-          example: cups
-        preparation:
-          type:
-          - string
-          - 'null'
-          example: sifted
-        notes:
-          type:
-          - string
-          - 'null'
-        substitutions:
-          type: array
-          items:
-            type: string
-        ingredient_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        nutrition_source:
-          type:
-          - string
-          - 'null'
-          example: USDA FoodData Central
-    RecipeResponse:
-      type: object
-      description: Response from generate endpoint containing the created recipe and usage info
-      properties:
-        data:
-          $ref: '#/components/schemas/Recipe'
-        usage:
-          $ref: '#/components/schemas/Usage'
-    StructuredStep:
-      type:
-      - object
-      - 'null'
-      properties:
-        action:
-          type: string
-          example: ROAST
-        temperature:
+        refrigerator:
           type:
           - object
           - 'null'
           properties:
-            celsius:
-              type: integer
-              example: 200
-            fahrenheit:
-              type: integer
-              example: 392
-        duration:
-          type:
-          - string
-          - 'null'
-          description: ISO 8601 duration
-          example: PT25M
-        doneness_cues:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P3D
+            notes:
+              type: string
+        freezer:
           type:
           - object
           - 'null'
           properties:
-            visual:
-              type:
-              - string
-              - 'null'
-              example: Golden brown edges
-            tactile:
-              type:
-              - string
-              - 'null'
-              example: Springs back when pressed
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P2M
+            notes:
+              type: string
+        reheating:
+          type:
+          - string
+          - 'null'
+        does_not_keep:
+          type: boolean
     Nutrition:
       type: object
       properties:
@@ -903,22 +924,219 @@ components:
             type: string
           example:
           - USDA FoodData Central
-    Dietary:
+    RecipeResponse:
+      type: object
+      description: Response from generate endpoint containing the created recipe and usage info
+      properties:
+        data:
+          $ref: '#/components/schemas/Recipe'
+        usage:
+          $ref: '#/components/schemas/Usage'
+    Equipment:
       type: object
       properties:
-        flags:
+        name:
+          type: string
+          example: Stand mixer
+        required:
+          type: boolean
+        alternative:
+          type:
+          - string
+          - 'null'
+          example: Hand mixer
+    Ingredient:
+      type: object
+      properties:
+        name:
+          type: string
+          example: all-purpose flour
+        quantity:
+          type:
+          - number
+          - 'null'
+          example: 2.5
+        unit:
+          type:
+          - string
+          - 'null'
+          example: cups
+        preparation:
+          type:
+          - string
+          - 'null'
+          example: sifted
+        notes:
+          type:
+          - string
+          - 'null'
+        substitutions:
           type: array
           items:
             type: string
-          example:
-          - Vegetarian
-          - Gluten-Free
-        not_suitable_for:
+        ingredient_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        nutrition_source:
+          type:
+          - string
+          - 'null'
+          example: USDA FoodData Central
+    RecipeListItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Classic Margherita Pizza
+        description:
+          type: string
+        category:
+          type: string
+          example: Dinner
+        cuisine:
+          type: string
+          example: Italian
+        difficulty:
+          type: string
+          enum:
+          - Easy
+          - Intermediate
+          - Advanced
+          - Professional
+        tags:
           type: array
           items:
             type: string
-          example:
-          - Nut allergy
+        meta:
+          $ref: '#/components/schemas/RecipeMeta'
+        dietary:
+          $ref: '#/components/schemas/Dietary'
+        nutrition_summary:
+          type: object
+          properties:
+            calories:
+              type:
+              - number
+              - 'null'
+            protein_g:
+              type:
+              - number
+              - 'null'
+            carbohydrates_g:
+              type:
+              - number
+              - 'null'
+            fat_g:
+              type:
+              - number
+              - 'null'
+    IngredientGroup:
+      type: object
+      properties:
+        group_name:
+          type: string
+          example: For the dough
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient'
+    StructuredStep:
+      type:
+      - object
+      - 'null'
+      properties:
+        action:
+          type: string
+          example: ROAST
+        temperature:
+          type:
+          - object
+          - 'null'
+          properties:
+            celsius:
+              type: integer
+              example: 200
+            fahrenheit:
+              type: integer
+              example: 392
+        duration:
+          type:
+          - string
+          - 'null'
+          description: ISO 8601 duration
+          example: PT25M
+        doneness_cues:
+          type:
+          - object
+          - 'null'
+          properties:
+            visual:
+              type:
+              - string
+              - 'null'
+              example: Golden brown edges
+            tactile:
+              type:
+              - string
+              - 'null'
+              example: Springs back when pressed
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        cuisine:
+          type: string
+        difficulty:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/RecipeMeta'
+        dietary:
+          $ref: '#/components/schemas/Dietary'
+        storage:
+          $ref: '#/components/schemas/Storage'
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientGroup'
+        instructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instruction'
+        troubleshooting:
+          type: array
+          items:
+            $ref: '#/components/schemas/Troubleshooting'
+        chef_notes:
+          type: array
+          items:
+            type: string
+        cultural_context:
+          type:
+          - string
+          - 'null'
+        nutrition:
+          $ref: '#/components/schemas/Nutrition'
     Troubleshooting:
       type: object
       properties:
@@ -934,6 +1152,52 @@ components:
         fix:
           type: string
           example: Dust with flour while kneading
+    RecipeMeta:
+      type: object
+      description: Timing and yield information
+      properties:
+        active_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT45M
+        passive_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT30M
+        total_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT1H15M
+        overnight_required:
+          type: boolean
+        yields:
+          type: string
+          example: 4 servings
+        yield_count:
+          type: integer
+          example: 4
+        serving_size_g:
+          type:
+          - number
+          - 'null'
+          example: 285
+    Instruction:
+      type: object
+      properties:
+        step_number:
+          type: integer
+        phase:
+          type: string
+          example: prep
+          description: 'One of: prep, cook, assemble, finish'
+        text:
+          type: string
+        structured:
+          $ref: '#/components/schemas/StructuredStep'
+        tips:
+          type: array
+          items:
+            type: string
     GenerateRequest:
       type: object
       required:
@@ -972,16 +1236,6 @@ components:
           description: Optional target total time in minutes
         notes:
           type: string
-    IngredientGroup:
-      type: object
-      properties:
-        group_name:
-          type: string
-          example: For the dough
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Ingredient'
     Usage:
       type: object
       description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
@@ -1045,168 +1299,22 @@ components:
           type: string
           format: uri
           example: https://recipe-api.com/pricing
-    Instruction:
+    Dietary:
       type: object
       properties:
-        step_number:
-          type: integer
-        phase:
-          type: string
-          example: prep
-          description: 'One of: prep, cook, assemble, finish'
-        text:
-          type: string
-        structured:
-          $ref: '#/components/schemas/StructuredStep'
-        tips:
+        flags:
           type: array
           items:
             type: string
-    Recipe:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-        cuisine:
-          type: string
-        difficulty:
-          type: string
-        tags:
+          example:
+          - Vegetarian
+          - Gluten-Free
+        not_suitable_for:
           type: array
           items:
             type: string
-        meta:
-          $ref: '#/components/schemas/RecipeMeta'
-        dietary:
-          $ref: '#/components/schemas/Dietary'
-        storage:
-          $ref: '#/components/schemas/Storage'
-        equipment:
-          type: array
-          items:
-            $ref: '#/components/schemas/Equipment'
-        ingredients:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngredientGroup'
-        instructions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instruction'
-        troubleshooting:
-          type: array
-          items:
-            $ref: '#/components/schemas/Troubleshooting'
-        chef_notes:
-          type: array
-          items:
-            type: string
-        cultural_context:
-          type:
-          - string
-          - 'null'
-        nutrition:
-          $ref: '#/components/schemas/Nutrition'
-    RecipeMeta:
-      type: object
-      description: Timing and yield information
-      properties:
-        active_time:
-          type: string
-          description: ISO 8601 duration
-          example: PT45M
-        passive_time:
-          type: string
-          description: ISO 8601 duration
-          example: PT30M
-        total_time:
-          type: string
-          description: ISO 8601 duration
-          example: PT1H15M
-        overnight_required:
-          type: boolean
-        yields:
-          type: string
-          example: 4 servings
-        yield_count:
-          type: integer
-          example: 4
-        serving_size_g:
-          type:
-          - number
-          - 'null'
-          example: 285
-    Equipment:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Stand mixer
-        required:
-          type: boolean
-        alternative:
-          type:
-          - string
-          - 'null'
-          example: Hand mixer
-    RecipeListItem:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          example: Classic Margherita Pizza
-        description:
-          type: string
-        category:
-          type: string
-          example: Dinner
-        cuisine:
-          type: string
-          example: Italian
-        difficulty:
-          type: string
-          enum:
-          - Easy
-          - Intermediate
-          - Advanced
-          - Professional
-        tags:
-          type: array
-          items:
-            type: string
-        meta:
-          $ref: '#/components/schemas/RecipeMeta'
-        dietary:
-          $ref: '#/components/schemas/Dietary'
-        nutrition_summary:
-          type: object
-          properties:
-            calories:
-              type:
-              - number
-              - 'null'
-            protein_g:
-              type:
-              - number
-              - 'null'
-            carbohydrates_g:
-              type:
-              - number
-              - 'null'
-            fat_g:
-              type:
-              - number
-              - 'null'
+          example:
+          - Nut allergy
     Error:
       type: object
       properties:
@@ -1217,114 +1325,6 @@ components:
               type: string
             message:
               type: string
-    Storage:
-      type: object
-      properties:
-        refrigerator:
-          type:
-          - object
-          - 'null'
-          properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P3D
-            notes:
-              type: string
-        freezer:
-          type:
-          - object
-          - 'null'
-          properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P2M
-            notes:
-              type: string
-        reheating:
-          type:
-          - string
-          - 'null'
-        does_not_keep:
-          type: boolean
-  responses:
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: BAD_REQUEST
-              message: Invalid recipe ID format. Use UUID.
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: UNAUTHORIZED
-              message: Missing X-API-Key header
-    RateLimited:
-      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            rate_limited:
-              summary: Per-minute rate limit exceeded
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Per-minute rate limit exceeded. Retry in a moment.
-            daily_limit:
-              summary: Daily request quota exhausted
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Daily limit reached (500 recipes). Try again tomorrow.
-            monthly_limit:
-              summary: Monthly request quota exhausted
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
-            unique_recipe_limit:
-              summary: Monthly unique recipe limit exceeded
-              value:
-                error:
-                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
-                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
-      headers:
-        Retry-After:
-          schema:
-            type: integer
-          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
-    Forbidden:
-      description: API key lacks permission
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: FORBIDDEN
-              message: This endpoint requires a paid API key.
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
