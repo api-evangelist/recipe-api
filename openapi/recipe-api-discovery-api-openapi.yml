@@ -16,7 +16,7 @@ info:
     **Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you''ll receive.
 
 
-    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).'
+    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at recipe-api.com.'
   version: 1.0.0
   contact:
     email: paul@recipe-api.com
@@ -78,6 +78,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '429':
           $ref: '#/components/responses/RateLimited'
+      operationId: getApiV1Categories
+      x-operation-id-source: derived
   /api/v1/cuisines:
     get:
       tags:
@@ -133,6 +135,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '429':
           $ref: '#/components/responses/RateLimited'
+      operationId: getApiV1Cuisines
+      x-operation-id-source: derived
   /api/v1/dietary-flags:
     get:
       tags:
@@ -188,6 +192,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '429':
           $ref: '#/components/responses/RateLimited'
+      operationId: getApiV1DietaryFlags
+      x-operation-id-source: derived
   /api/v1/ingredients:
     get:
       tags:
@@ -269,6 +275,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '429':
           $ref: '#/components/responses/RateLimited'
+      operationId: getApiV1Ingredients
+      x-operation-id-source: derived
   /api/v1/ingredient-categories:
     get:
       tags:
@@ -318,6 +326,8 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '429':
           $ref: '#/components/responses/RateLimited'
+      operationId: getApiV1IngredientCategories
+      x-operation-id-source: derived
 components:
   responses:
     Unauthorized:
@@ -377,6 +387,16 @@ components:
             type: integer
           description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
     IngredientItem:
       type: object
       description: An ingredient from the master ingredients database
@@ -396,16 +416,6 @@ components:
           type: string
           description: 'Data source: USDA or Aggregated Public Sources'
           example: USDA
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

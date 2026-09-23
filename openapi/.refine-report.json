@@ -1,11 +1,7 @@
 {
   "provider": "recipe-api",
   "sources": [
-    "recipe-api-discovery-api-openapi.yml",
-    "recipe-api-image-generation-api-openapi.yml",
-    "recipe-api-ingredients-api-openapi.yml",
-    "recipe-api-public-api-openapi.yml",
-    "recipe-api-recipes-api-openapi.yml"
+    "_original/recipe-api-openapi.json"
   ],
   "outputs": [
     "recipe-api-discovery-api-openapi.yml",
@@ -18,7 +14,16 @@
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "recipe-api-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "recipe-api-openapi.json: declared missing tag: Image Generation",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "recipe-api-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "recipe-api-image-generation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "recipe-api-ingredients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "recipe-api-public-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "recipe-api-recipes-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

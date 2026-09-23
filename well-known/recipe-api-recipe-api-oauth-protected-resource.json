@@ -1,0 +1,1 @@
+{"resource":"https://recipe-api.com/api/mcp","authorization_servers":["https://recipe-api.com"],"scopes_supported":["recipes"],"bearer_methods_supported":["header"],"resource_documentation":"https://recipe-api.com/mcp"}

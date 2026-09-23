@@ -16,7 +16,7 @@ info:
     **Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you''ll receive.
 
 
-    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).'
+    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at recipe-api.com.'
   version: 1.0.0
   contact:
     email: paul@recipe-api.com
@@ -143,6 +143,8 @@ paths:
                 error:
                   code: IMAGE_GENERATION_TIMEOUT
                   message: Image generation timed out. Please try again (credit refunded).
+      operationId: postApiV1ImageGenerate
+      x-operation-id-source: derived
 components:
   responses:
     Unauthorized:

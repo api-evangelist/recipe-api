@@ -16,7 +16,7 @@ info:
     **Sample Responses** - All endpoints below show example responses so you can evaluate the data structure before signing up. Expand any endpoint to see what you''ll receive.
 
 
-    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at [recipe-api.com](https://recipe-api.com/signup).'
+    **Authentication** - Protected endpoints require an `X-API-Key` header. Get your key at recipe-api.com.'
   version: 1.0.0
   contact:
     email: paul@recipe-api.com
@@ -86,6 +86,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '429':
           $ref: '#/components/responses/RateLimited'
+      operationId: getApiV1IngredientsById
+      x-operation-id-source: derived
 components:
   responses:
     Unauthorized:
@@ -165,35 +167,6 @@ components:
             type: integer
           description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
   schemas:
-    IngredientDetail:
-      type: object
-      description: A single ingredient with per-100g USDA nutrition (billable detail endpoint)
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          example: Chickpeas, canned, drained
-        category:
-          type: string
-          example: Legumes
-        source:
-          type: string
-          description: 'Data source: USDA or Aggregated Public Sources'
-          example: USDA
-        nutrition:
-          type:
-          - object
-          - 'null'
-          description: Null only for the rare custom ingredient with no USDA match yet
-          properties:
-            per_100g:
-              $ref: '#/components/schemas/NutrientValues'
-            sources:
-              type: array
-              items:
-                type: string
     Usage:
       type: object
       description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
@@ -389,6 +362,35 @@ components:
           type:
           - number
           - 'null'
+    IngredientDetail:
+      type: object
+      description: A single ingredient with per-100g USDA nutrition (billable detail endpoint)
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Chickpeas, canned, drained
+        category:
+          type: string
+          example: Legumes
+        source:
+          type: string
+          description: 'Data source: USDA or Aggregated Public Sources'
+          example: USDA
+        nutrition:
+          type:
+          - object
+          - 'null'
+          description: Null only for the rare custom ingredient with no USDA match yet
+          properties:
+            per_100g:
+              $ref: '#/components/schemas/NutrientValues'
+            sources:
+              type: array
+              items:
+                type: string
     Error:
       type: object
       properties:
