@@ -330,16 +330,6 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: UNAUTHORIZED
-              message: Missing X-API-Key header
     Forbidden:
       description: API key lacks permission
       content:
@@ -386,6 +376,16 @@ components:
           schema:
             type: integer
           description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
   schemas:
     Error:
       type: object

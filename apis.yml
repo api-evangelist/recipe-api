@@ -57,7 +57,6 @@ apis:
   name: Recipe API Discovery API
   description: Requires API key. No credit cost. Browse categories, cuisines, and dietary options.
   humanURL: https://recipe-api.com/docs
-  baseURL: https://recipe-api.com
   tags:
   - Discovery
   properties:
@@ -89,11 +88,11 @@ apis:
   name: Recipe API Image Generation API
   description: The Image Generation API from Recipe API — 1 operation(s) for image generation.
   humanURL: https://recipe-api.com/docs
-  baseURL: https://recipe-api.com
   tags:
-  - Image-Generation
+  - Image Generation
   tags_raw:
   - Image Generation
+  - Image-Generation
   properties:
   - type: OpenAPI
     url: openapi/recipe-api-image-generation-api-openapi.yml
@@ -123,7 +122,6 @@ apis:
   name: Recipe API Ingredients API
   description: Search ingredients free. Per-100g USDA nutrition by ID costs 1 credit.
   humanURL: https://recipe-api.com/docs
-  baseURL: https://recipe-api.com
   tags:
   - Ingredients
   properties:
@@ -155,7 +153,6 @@ apis:
   name: Recipe API Public API
   description: No authentication required. Try `/api/v1/dinner` for a complete recipe example.
   humanURL: https://recipe-api.com/docs
-  baseURL: https://recipe-api.com
   tags:
   - Public
   properties:
@@ -187,7 +184,6 @@ apis:
   name: Recipe API Recipes API
   description: Browse recipes free. Full recipe detail costs 1 credit. Sample data shown inline.
   humanURL: https://recipe-api.com/docs
-  baseURL: https://recipe-api.com
   tags:
   - Recipes
   properties:

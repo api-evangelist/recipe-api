@@ -146,37 +146,6 @@ paths:
       operationId: postApiV1ImageGenerate
       x-operation-id-source: derived
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: UNAUTHORIZED
-              message: Missing X-API-Key header
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: BAD_REQUEST
-              message: Invalid recipe ID format. Use UUID.
   schemas:
     ImageGenerateRequest:
       type: object
@@ -207,6 +176,37 @@ components:
               type: string
             message:
               type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: Invalid recipe ID format. Use UUID.
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
