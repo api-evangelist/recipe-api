@@ -681,24 +681,105 @@ paths:
       operationId: postApiV1Generate
       x-operation-id-source: derived
 components:
+  responses:
+    Forbidden:
+      description: API key lacks permission
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: This endpoint requires a paid API key.
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: Invalid recipe ID format. Use UUID.
+    RateLimited:
+      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            rate_limited:
+              summary: Per-minute rate limit exceeded
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Per-minute rate limit exceeded. Retry in a moment.
+            daily_limit:
+              summary: Daily request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Daily limit reached (500 recipes). Try again tomorrow.
+            monthly_limit:
+              summary: Monthly request quota exhausted
+              value:
+                error:
+                  code: RATE_LIMITED
+                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
+            unique_recipe_limit:
+              summary: Monthly unique recipe limit exceeded
+              value:
+                error:
+                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
+                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
   schemas:
-    Instruction:
+    Equipment:
       type: object
       properties:
-        step_number:
-          type: integer
-        phase:
+        name:
           type: string
-          example: prep
-          description: 'One of: prep, cook, assemble, finish'
-        text:
-          type: string
-        structured:
-          $ref: '#/components/schemas/StructuredStep'
-        tips:
-          type: array
-          items:
-            type: string
+          example: Stand mixer
+        required:
+          type: boolean
+        alternative:
+          type:
+          - string
+          - 'null'
+          example: Hand mixer
+    RecipeResponse:
+      type: object
+      description: Response from generate endpoint containing the created recipe and usage info
+      properties:
+        data:
+          $ref: '#/components/schemas/Recipe'
+        usage:
+          $ref: '#/components/schemas/Usage'
     IngredientGroup:
       type: object
       properties:
@@ -709,6 +790,133 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Ingredient'
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        cuisine:
+          type: string
+        difficulty:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/RecipeMeta'
+        dietary:
+          $ref: '#/components/schemas/Dietary'
+        storage:
+          $ref: '#/components/schemas/Storage'
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientGroup'
+        instructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instruction'
+        troubleshooting:
+          type: array
+          items:
+            $ref: '#/components/schemas/Troubleshooting'
+        chef_notes:
+          type: array
+          items:
+            type: string
+        cultural_context:
+          type:
+          - string
+          - 'null'
+        nutrition:
+          $ref: '#/components/schemas/Nutrition'
+    Storage:
+      type: object
+      properties:
+        refrigerator:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P3D
+            notes:
+              type: string
+        freezer:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P2M
+            notes:
+              type: string
+        reheating:
+          type:
+          - string
+          - 'null'
+        does_not_keep:
+          type: boolean
+    Troubleshooting:
+      type: object
+      properties:
+        symptom:
+          type: string
+          example: Dough too sticky
+        likely_cause:
+          type: string
+          example: Too much water or humidity
+        prevention:
+          type: string
+          example: Add flour gradually, check humidity
+        fix:
+          type: string
+          example: Dust with flour while kneading
+    RecipeMeta:
+      type: object
+      description: Timing and yield information
+      properties:
+        active_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT45M
+        passive_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT30M
+        total_time:
+          type: string
+          description: ISO 8601 duration
+          example: PT1H15M
+        overnight_required:
+          type: boolean
+        yields:
+          type: string
+          example: 4 servings
+        yield_count:
+          type: integer
+          example: 4
+        serving_size_g:
+          type:
+          - number
+          - 'null'
+          example: 285
     Ingredient:
       type: object
       properties:
@@ -748,253 +956,6 @@ components:
           - string
           - 'null'
           example: USDA FoodData Central
-    Usage:
-      type: object
-      description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
-      properties:
-        monthly_remaining:
-          type: integer
-          description: Requests remaining this billing period
-          example: 1950
-        monthly_limit:
-          type: integer
-          description: Total monthly quota
-          example: 2000
-        daily_remaining:
-          type: integer
-          description: Requests remaining today
-          example: 95
-        daily_limit:
-          type: integer
-          description: Maximum requests per day
-          example: 100
-        plan_key:
-          type: string
-          example: indie
-        plan_name:
-          type: string
-          example: Developer
-        period_type:
-          type: string
-          enum:
-          - evaluation
-          - rolling_period
-          - billing_period
-        detail_used:
-          type: integer
-          example: 51
-        detail_limit:
-          type: integer
-          example: 15000
-        detail_remaining:
-          type: integer
-          example: 14949
-        generation_used:
-          type: integer
-          example: 2
-        generation_limit:
-          type: integer
-          example: 150
-        generation_remaining:
-          type: integer
-          example: 148
-        generation_overage_remaining:
-          type: integer
-          example: 100
-        reset_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Null for lifetime evaluations
-        upgrade_url:
-          type: string
-          format: uri
-          example: https://recipe-api.com/pricing
-    StructuredStep:
-      type:
-      - object
-      - 'null'
-      properties:
-        action:
-          type: string
-          example: ROAST
-        temperature:
-          type:
-          - object
-          - 'null'
-          properties:
-            celsius:
-              type: integer
-              example: 200
-            fahrenheit:
-              type: integer
-              example: 392
-        duration:
-          type:
-          - string
-          - 'null'
-          description: ISO 8601 duration
-          example: PT25M
-        doneness_cues:
-          type:
-          - object
-          - 'null'
-          properties:
-            visual:
-              type:
-              - string
-              - 'null'
-              example: Golden brown edges
-            tactile:
-              type:
-              - string
-              - 'null'
-              example: Springs back when pressed
-    GenerateRequest:
-      type: object
-      required:
-      - title
-      - key_ingredients
-      properties:
-        title:
-          type: string
-          maxLength: 80
-        key_ingredients:
-          type: array
-          items:
-            type: string
-          minItems: 1
-        cuisine:
-          type: string
-          description: Optional target cuisine
-        difficulty:
-          type: string
-          enum:
-          - Easy
-          - Intermediate
-          - Advanced
-          - Professional
-          description: 'Optional difficulty: Easy, Intermediate, Advanced, or Professional'
-        equipment:
-          type: array
-          items:
-            type: string
-          minItems: 1
-          description: Optional available equipment
-        time:
-          type: integer
-          minimum: 5
-          maximum: 720
-          description: Optional target total time in minutes
-        notes:
-          type: string
-    Equipment:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Stand mixer
-        required:
-          type: boolean
-        alternative:
-          type:
-          - string
-          - 'null'
-          example: Hand mixer
-    Troubleshooting:
-      type: object
-      properties:
-        symptom:
-          type: string
-          example: Dough too sticky
-        likely_cause:
-          type: string
-          example: Too much water or humidity
-        prevention:
-          type: string
-          example: Add flour gradually, check humidity
-        fix:
-          type: string
-          example: Dust with flour while kneading
-    RecipeResponse:
-      type: object
-      description: Response from generate endpoint containing the created recipe and usage info
-      properties:
-        data:
-          $ref: '#/components/schemas/Recipe'
-        usage:
-          $ref: '#/components/schemas/Usage'
-    RecipeMeta:
-      type: object
-      description: Timing and yield information
-      properties:
-        active_time:
-          type: string
-          description: ISO 8601 duration
-          example: PT45M
-        passive_time:
-          type: string
-          description: ISO 8601 duration
-          example: PT30M
-        total_time:
-          type: string
-          description: ISO 8601 duration
-          example: PT1H15M
-        overnight_required:
-          type: boolean
-        yields:
-          type: string
-          example: 4 servings
-        yield_count:
-          type: integer
-          example: 4
-        serving_size_g:
-          type:
-          - number
-          - 'null'
-          example: 285
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-    Storage:
-      type: object
-      properties:
-        refrigerator:
-          type:
-          - object
-          - 'null'
-          properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P3D
-            notes:
-              type: string
-        freezer:
-          type:
-          - object
-          - 'null'
-          properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P2M
-            notes:
-              type: string
-        reheating:
-          type:
-          - string
-          - 'null'
-        does_not_keep:
-          type: boolean
     Nutrition:
       type: object
       properties:
@@ -1135,74 +1096,69 @@ components:
             type: string
           example:
           - USDA FoodData Central
-    Recipe:
+    Usage:
       type: object
+      description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
       properties:
-        id:
+        monthly_remaining:
+          type: integer
+          description: Requests remaining this billing period
+          example: 1950
+        monthly_limit:
+          type: integer
+          description: Total monthly quota
+          example: 2000
+        daily_remaining:
+          type: integer
+          description: Requests remaining today
+          example: 95
+        daily_limit:
+          type: integer
+          description: Maximum requests per day
+          example: 100
+        plan_key:
           type: string
-          format: uuid
-        name:
+          example: indie
+        plan_name:
           type: string
-        description:
+          example: Developer
+        period_type:
           type: string
-        category:
-          type: string
-        cuisine:
-          type: string
-        difficulty:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        meta:
-          $ref: '#/components/schemas/RecipeMeta'
-        dietary:
-          $ref: '#/components/schemas/Dietary'
-        storage:
-          $ref: '#/components/schemas/Storage'
-        equipment:
-          type: array
-          items:
-            $ref: '#/components/schemas/Equipment'
-        ingredients:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngredientGroup'
-        instructions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instruction'
-        troubleshooting:
-          type: array
-          items:
-            $ref: '#/components/schemas/Troubleshooting'
-        chef_notes:
-          type: array
-          items:
-            type: string
-        cultural_context:
+          enum:
+          - evaluation
+          - rolling_period
+          - billing_period
+        detail_used:
+          type: integer
+          example: 51
+        detail_limit:
+          type: integer
+          example: 15000
+        detail_remaining:
+          type: integer
+          example: 14949
+        generation_used:
+          type: integer
+          example: 2
+        generation_limit:
+          type: integer
+          example: 150
+        generation_remaining:
+          type: integer
+          example: 148
+        generation_overage_remaining:
+          type: integer
+          example: 100
+        reset_at:
           type:
           - string
           - 'null'
-        nutrition:
-          $ref: '#/components/schemas/Nutrition'
-    Dietary:
-      type: object
-      properties:
-        flags:
-          type: array
-          items:
-            type: string
-          example:
-          - Vegetarian
-          - Gluten-Free
-        not_suitable_for:
-          type: array
-          items:
-            type: string
-          example:
-          - Nut allergy
+          format: date-time
+          description: Null for lifetime evaluations
+        upgrade_url:
+          type: string
+          format: uri
+          example: https://recipe-api.com/pricing
     RecipeListItem:
       type: object
       properties:
@@ -1254,83 +1210,127 @@ components:
               type:
               - number
               - 'null'
-  responses:
-    RateLimited:
-      description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            rate_limited:
-              summary: Per-minute rate limit exceeded
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Per-minute rate limit exceeded. Retry in a moment.
-            daily_limit:
-              summary: Daily request quota exhausted
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Daily limit reached (500 recipes). Try again tomorrow.
-            monthly_limit:
-              summary: Monthly request quota exhausted
-              value:
-                error:
-                  code: RATE_LIMITED
-                  message: Monthly limit reached (15,000 recipes). Upgrade your plan for more.
-            unique_recipe_limit:
-              summary: Monthly unique recipe limit exceeded
-              value:
-                error:
-                  code: UNIQUE_RECIPE_LIMIT_EXCEEDED
-                  message: Monthly unique recipe limit reached (100). You've accessed 100 different recipes this period. Re-requesting previously accessed recipes doesn't count against this limit. Upgrade for more.
-      headers:
-        Retry-After:
-          schema:
-            type: integer
-          description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    Instruction:
+      type: object
+      properties:
+        step_number:
+          type: integer
+        phase:
+          type: string
+          example: prep
+          description: 'One of: prep, cook, assemble, finish'
+        text:
+          type: string
+        structured:
+          $ref: '#/components/schemas/StructuredStep'
+        tips:
+          type: array
+          items:
+            type: string
+    Dietary:
+      type: object
+      properties:
+        flags:
+          type: array
+          items:
+            type: string
           example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          - Vegetarian
+          - Gluten-Free
+        not_suitable_for:
+          type: array
+          items:
+            type: string
           example:
-            error:
-              code: UNAUTHORIZED
-              message: Missing X-API-Key header
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: BAD_REQUEST
-              message: Invalid recipe ID format. Use UUID.
-    Forbidden:
-      description: API key lacks permission
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: FORBIDDEN
-              message: This endpoint requires a paid API key.
+          - Nut allergy
+    GenerateRequest:
+      type: object
+      required:
+      - title
+      - key_ingredients
+      properties:
+        title:
+          type: string
+          maxLength: 80
+        key_ingredients:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        cuisine:
+          type: string
+          description: Optional target cuisine
+        difficulty:
+          type: string
+          enum:
+          - Easy
+          - Intermediate
+          - Advanced
+          - Professional
+          description: 'Optional difficulty: Easy, Intermediate, Advanced, or Professional'
+        equipment:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: Optional available equipment
+        time:
+          type: integer
+          minimum: 5
+          maximum: 720
+          description: Optional target total time in minutes
+        notes:
+          type: string
+    StructuredStep:
+      type:
+      - object
+      - 'null'
+      properties:
+        action:
+          type: string
+          example: ROAST
+        temperature:
+          type:
+          - object
+          - 'null'
+          properties:
+            celsius:
+              type: integer
+              example: 200
+            fahrenheit:
+              type: integer
+              example: 392
+        duration:
+          type:
+          - string
+          - 'null'
+          description: ISO 8601 duration
+          example: PT25M
+        doneness_cues:
+          type:
+          - object
+          - 'null'
+          properties:
+            visual:
+              type:
+              - string
+              - 'null'
+              example: Golden brown edges
+            tactile:
+              type:
+              - string
+              - 'null'
+              example: Springs back when pressed
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

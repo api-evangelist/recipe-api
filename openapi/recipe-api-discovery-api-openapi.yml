@@ -387,16 +387,6 @@ components:
               code: UNAUTHORIZED
               message: Missing X-API-Key header
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     IngredientItem:
       type: object
       description: An ingredient from the master ingredients database
@@ -416,6 +406,16 @@ components:
           type: string
           description: 'Data source: USDA or Aggregated Public Sources'
           example: USDA
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

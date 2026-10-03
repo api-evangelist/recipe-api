@@ -146,47 +146,7 @@ paths:
       operationId: postApiV1ImageGenerate
       x-operation-id-source: derived
 components:
-  schemas:
-    ImageGenerateRequest:
-      type: object
-      required:
-      - recipe_id
-      properties:
-        recipe_id:
-          type: string
-          format: uuid
-          description: UUID of a public recipe to generate an image for
-        aspect_ratio:
-          type: string
-          enum:
-          - '1:1'
-          - '3:4'
-          - '4:3'
-          - '9:16'
-          - '16:9'
-          default: '4:3'
-          description: Aspect ratio of the generated image
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
   responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
     BadRequest:
       description: Invalid request
       content:
@@ -207,6 +167,46 @@ components:
             error:
               code: UNAUTHORIZED
               message: Missing X-API-Key header
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    ImageGenerateRequest:
+      type: object
+      required:
+      - recipe_id
+      properties:
+        recipe_id:
+          type: string
+          format: uuid
+          description: UUID of a public recipe to generate an image for
+        aspect_ratio:
+          type: string
+          enum:
+          - '1:1'
+          - '3:4'
+          - '4:3'
+          - '9:16'
+          - '16:9'
+          default: '4:3'
+          description: Aspect ratio of the generated image
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

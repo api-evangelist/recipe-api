@@ -100,16 +100,6 @@ components:
             error:
               code: FORBIDDEN
               message: This endpoint requires a paid API key.
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
     BadRequest:
       description: Invalid request
       content:
@@ -166,6 +156,16 @@ components:
             error:
               code: UNAUTHORIZED
               message: Missing X-API-Key header
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
   schemas:
     IngredientDetail:
       type: object
@@ -196,16 +196,6 @@ components:
               type: array
               items:
                 type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     Usage:
       type: object
       description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
@@ -269,6 +259,16 @@ components:
           type: string
           format: uri
           example: https://recipe-api.com/pricing
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
     NutrientValues:
       type: object
       description: The 32 USDA-tracked nutrients. Per serving on recipes; per 100g on ingredients.
