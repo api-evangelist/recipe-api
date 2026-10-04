@@ -90,16 +90,16 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    Forbidden:
-      description: API key lacks permission
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
             error:
-              code: FORBIDDEN
-              message: This endpoint requires a paid API key.
+              code: NOT_FOUND
+              message: Recipe not found
     BadRequest:
       description: Invalid request
       content:
@@ -110,6 +110,26 @@ components:
             error:
               code: BAD_REQUEST
               message: Invalid recipe ID format. Use UUID.
+    Unauthorized:
+      description: Missing or invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Missing X-API-Key header
+    Forbidden:
+      description: API key lacks permission
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: FORBIDDEN
+              message: This endpoint requires a paid API key.
     RateLimited:
       description: Rate limit or quota exceeded. RATE_LIMITED covers the per-minute rate limit as well as daily and monthly request quota exhaustion.
       content:
@@ -146,56 +166,7 @@ components:
           schema:
             type: integer
           description: Seconds to wait before retrying (present when the per-minute rate limit triggered the 429)
-    Unauthorized:
-      description: Missing or invalid API key
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: UNAUTHORIZED
-              message: Missing X-API-Key header
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
   schemas:
-    IngredientDetail:
-      type: object
-      description: A single ingredient with per-100g USDA nutrition (billable detail endpoint)
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-          example: Chickpeas, canned, drained
-        category:
-          type: string
-          example: Legumes
-        source:
-          type: string
-          description: 'Data source: USDA or Aggregated Public Sources'
-          example: USDA
-        nutrition:
-          type:
-          - object
-          - 'null'
-          description: Null only for the rare custom ingredient with no USDA match yet
-          properties:
-            per_100g:
-              $ref: '#/components/schemas/NutrientValues'
-            sources:
-              type: array
-              items:
-                type: string
     Usage:
       type: object
       description: Structured entitlement usage. Evaluation accounts receive 50 lifetime successful detail requests, 50 unique recipes, and one successful generation. Paid plans are Developer ($29), Production ($99), and Scale ($299); historical subscriptions remain grandfathered.
@@ -269,6 +240,35 @@ components:
               type: string
             message:
               type: string
+    IngredientDetail:
+      type: object
+      description: A single ingredient with per-100g USDA nutrition (billable detail endpoint)
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Chickpeas, canned, drained
+        category:
+          type: string
+          example: Legumes
+        source:
+          type: string
+          description: 'Data source: USDA or Aggregated Public Sources'
+          example: USDA
+        nutrition:
+          type:
+          - object
+          - 'null'
+          description: Null only for the rare custom ingredient with no USDA match yet
+          properties:
+            per_100g:
+              $ref: '#/components/schemas/NutrientValues'
+            sources:
+              type: array
+              items:
+                type: string
     NutrientValues:
       type: object
       description: The 32 USDA-tracked nutrients. Per serving on recipes; per 100g on ingredients.

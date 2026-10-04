@@ -205,36 +205,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Instruction:
-      type: object
-      properties:
-        step_number:
-          type: integer
-        phase:
-          type: string
-          example: prep
-          description: 'One of: prep, cook, assemble, finish'
-        text:
-          type: string
-        structured:
-          $ref: '#/components/schemas/StructuredStep'
-        tips:
-          type: array
-          items:
-            type: string
-    Equipment:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Stand mixer
-        required:
-          type: boolean
-        alternative:
-          type:
-          - string
-          - 'null'
-          example: Hand mixer
     RecipeMeta:
       type: object
       description: Timing and yield information
@@ -264,6 +234,173 @@ components:
           - number
           - 'null'
           example: 285
+    Storage:
+      type: object
+      properties:
+        refrigerator:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P3D
+            notes:
+              type: string
+        freezer:
+          type:
+          - object
+          - 'null'
+          properties:
+            duration:
+              type: string
+              description: ISO 8601 duration
+              example: P2M
+            notes:
+              type: string
+        reheating:
+          type:
+          - string
+          - 'null'
+        does_not_keep:
+          type: boolean
+    Ingredient:
+      type: object
+      properties:
+        name:
+          type: string
+          example: all-purpose flour
+        quantity:
+          type:
+          - number
+          - 'null'
+          example: 2.5
+        unit:
+          type:
+          - string
+          - 'null'
+          example: cups
+        preparation:
+          type:
+          - string
+          - 'null'
+          example: sifted
+        notes:
+          type:
+          - string
+          - 'null'
+        substitutions:
+          type: array
+          items:
+            type: string
+        ingredient_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+        nutrition_source:
+          type:
+          - string
+          - 'null'
+          example: USDA FoodData Central
+    Troubleshooting:
+      type: object
+      properties:
+        symptom:
+          type: string
+          example: Dough too sticky
+        likely_cause:
+          type: string
+          example: Too much water or humidity
+        prevention:
+          type: string
+          example: Add flour gradually, check humidity
+        fix:
+          type: string
+          example: Dust with flour while kneading
+    Instruction:
+      type: object
+      properties:
+        step_number:
+          type: integer
+        phase:
+          type: string
+          example: prep
+          description: 'One of: prep, cook, assemble, finish'
+        text:
+          type: string
+        structured:
+          $ref: '#/components/schemas/StructuredStep'
+        tips:
+          type: array
+          items:
+            type: string
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        cuisine:
+          type: string
+        difficulty:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        meta:
+          $ref: '#/components/schemas/RecipeMeta'
+        dietary:
+          $ref: '#/components/schemas/Dietary'
+        storage:
+          $ref: '#/components/schemas/Storage'
+        equipment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Equipment'
+        ingredients:
+          type: array
+          items:
+            $ref: '#/components/schemas/IngredientGroup'
+        instructions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Instruction'
+        troubleshooting:
+          type: array
+          items:
+            $ref: '#/components/schemas/Troubleshooting'
+        chef_notes:
+          type: array
+          items:
+            type: string
+        cultural_context:
+          type:
+          - string
+          - 'null'
+        nutrition:
+          $ref: '#/components/schemas/Nutrition'
+    Equipment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Stand mixer
+        required:
+          type: boolean
+        alternative:
+          type:
+          - string
+          - 'null'
+          example: Hand mixer
     Nutrition:
       type: object
       properties:
@@ -404,55 +541,6 @@ components:
             type: string
           example:
           - USDA FoodData Central
-    Ingredient:
-      type: object
-      properties:
-        name:
-          type: string
-          example: all-purpose flour
-        quantity:
-          type:
-          - number
-          - 'null'
-          example: 2.5
-        unit:
-          type:
-          - string
-          - 'null'
-          example: cups
-        preparation:
-          type:
-          - string
-          - 'null'
-          example: sifted
-        notes:
-          type:
-          - string
-          - 'null'
-        substitutions:
-          type: array
-          items:
-            type: string
-        ingredient_id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-        nutrition_source:
-          type:
-          - string
-          - 'null'
-          example: USDA FoodData Central
-    IngredientGroup:
-      type: object
-      properties:
-        group_name:
-          type: string
-          example: For the dough
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Ingredient'
     Dietary:
       type: object
       properties:
@@ -469,89 +557,6 @@ components:
             type: string
           example:
           - Nut allergy
-    Recipe:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-        cuisine:
-          type: string
-        difficulty:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        meta:
-          $ref: '#/components/schemas/RecipeMeta'
-        dietary:
-          $ref: '#/components/schemas/Dietary'
-        storage:
-          $ref: '#/components/schemas/Storage'
-        equipment:
-          type: array
-          items:
-            $ref: '#/components/schemas/Equipment'
-        ingredients:
-          type: array
-          items:
-            $ref: '#/components/schemas/IngredientGroup'
-        instructions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instruction'
-        troubleshooting:
-          type: array
-          items:
-            $ref: '#/components/schemas/Troubleshooting'
-        chef_notes:
-          type: array
-          items:
-            type: string
-        cultural_context:
-          type:
-          - string
-          - 'null'
-        nutrition:
-          $ref: '#/components/schemas/Nutrition'
-    Storage:
-      type: object
-      properties:
-        refrigerator:
-          type:
-          - object
-          - 'null'
-          properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P3D
-            notes:
-              type: string
-        freezer:
-          type:
-          - object
-          - 'null'
-          properties:
-            duration:
-              type: string
-              description: ISO 8601 duration
-              example: P2M
-            notes:
-              type: string
-        reheating:
-          type:
-          - string
-          - 'null'
-        does_not_keep:
-          type: boolean
     StructuredStep:
       type:
       - object
@@ -592,21 +597,16 @@ components:
               - string
               - 'null'
               example: Springs back when pressed
-    Troubleshooting:
+    IngredientGroup:
       type: object
       properties:
-        symptom:
+        group_name:
           type: string
-          example: Dough too sticky
-        likely_cause:
-          type: string
-          example: Too much water or humidity
-        prevention:
-          type: string
-          example: Add flour gradually, check humidity
-        fix:
-          type: string
-          example: Dust with flour while kneading
+          example: For the dough
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ingredient'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

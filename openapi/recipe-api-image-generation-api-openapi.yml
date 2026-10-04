@@ -147,6 +147,16 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: NOT_FOUND
+              message: Recipe not found
     BadRequest:
       description: Invalid request
       content:
@@ -167,16 +177,6 @@ components:
             error:
               code: UNAUTHORIZED
               message: Missing X-API-Key header
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          example:
-            error:
-              code: NOT_FOUND
-              message: Recipe not found
   schemas:
     Error:
       type: object
