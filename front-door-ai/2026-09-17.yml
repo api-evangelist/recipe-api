@@ -1,0 +1,32 @@
+# Front Door AI Index — recipe-api — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: recipe-api
+  lexicon_version: '1.0'
+  probed_at: '2026-09-25'
+  host: recipe-api.com
+  final_host: recipe-api.com
+  ownership: own
+  owner: recipe-api
+  shares_host_with: null
+  inherited_from: null
+  alias_of: null
+  verdict: scored
+  score: 11
+  band: 5
+  band_label: prominent
+  host_score: 11
+  density: 6.64
+  words: 1656
+  tiers:
+    agentic: 4
+    core: 5
+    model: 2
+  ambiguous: 3
+  top_terms:
+    AI: 5
+    MCP: 3
+    agent: 3
+    Claude: 2
+    AI assistant: 1
