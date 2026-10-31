@@ -1,4 +1,4 @@
-# Recipe API (recipe-api)
+# Recipe API
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,188 +66,121 @@
 
 Recipe API is a B2B recipe and nutrition API providing structured recipes with comprehensive, USDA-backed nutrition data — 32 nutrients per recipe, structured preparation steps, and per-100g nutrition on individual ingredients. Beyond browsing and filtering an existing catalog by category, cuisine, dietary flag and macro, it will generate a new recipe with nutrition on demand, and generate food photography from a recipe. It positions itself as a lighter-weight alternative for developers who want clean recipe data without much setup, and publishes both an llms.txt and an official MCP server so that AI clients can use it directly. Self-serve from a free evaluation tier through to a paid scale tier, with a documented keyless quick-start call so a developer can try the API before signing up.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/recipe-api/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/recipe-api/refs/heads/main/apis.yml)
+**Areas:** Recipes · Food · Nutrition · Ingredients · Data · Generative AI · MCP · Agents
 
-## Scope
+## Recipe API on APIs.io
 
-- **Type:** Index
-- **Position:** Producing
-- **Access:** 3rd-Party
+Everything profiled for Recipe API is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/recipe-api/](https://apis.io/providers/recipe-api/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (5)
 
-- Recipes
-- Food
-- Nutrition
-- Ingredients
-- Data
-- Generative AI
-- MCP
-- Agents
+- [Recipe API Discovery API](https://apis.io/apis/recipe-api/recipe-api-discovery-api/) — Requires API key. No credit cost. Browse categories, cuisines, and dietary options.
+- [Recipe API Image Generation API](https://apis.io/apis/recipe-api/recipe-api-image-generation-api/) — The Image Generation API from Recipe API — 1 operation(s) for image generation.
+- [Recipe API Ingredients API](https://apis.io/apis/recipe-api/recipe-api-ingredients-api/) — Search ingredients free. Per-100g USDA nutrition by ID costs 1 credit.
+- [Recipe API Public API](https://apis.io/apis/recipe-api/recipe-api-public-api/) — No authentication required. Try `/api/v1/dinner` for a complete recipe example.
+- [Recipe API Recipes API](https://apis.io/apis/recipe-api/recipe-api-recipes-api/) — Browse recipes free. Full recipe detail costs 1 credit. Sample data shown inline.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-08-03
-- **Modified:** 2026-08-03
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Recipe API Discovery API
+Model Context Protocol servers that expose the API to agents.
 
-Requires API key. No credit cost. Browse categories, cuisines, and dietary options.
+- [recipe-api](https://apis.io/servers/recipe-api/recipe-api/)
 
-- **Human URL:** [https://recipe-api.com/docs](https://recipe-api.com/docs)
-- **Base URL:** `https://recipe-api.com`
+#### Collections (5)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Discovery
+- [Recipe Discovery API](https://apis.io/collections/recipe-api/open-recipe-api-discovery-api/)
+- [Recipe Image Generation API](https://apis.io/collections/recipe-api/open-recipe-api-image-generation-api/)
+- [Recipe Ingredients API](https://apis.io/collections/recipe-api/open-recipe-api-ingredients-api/)
+- [Recipe Public API](https://apis.io/collections/recipe-api/open-recipe-api-public-api/)
+- [Recipe Recipes API](https://apis.io/collections/recipe-api/open-recipe-api-recipes-api/)
 
-#### Properties
+#### Security (2)
 
-- [OpenAPI](openapi/recipe-api-discovery-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/recipe-api-discovery-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/recipe-api-discovery-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [X- Open A P I- Source](https://recipe-api.com/openapi.json)
-- [Documentation](https://recipe-api.com/docs)
-- [Signup](https://recipe-api.com/signup)
-- [Login](https://recipe-api.com/login)
-- [Pricing](https://recipe-api.com/pricing)
-- [Terms of Service](https://recipe-api.com/terms)
-- [Privacy Policy](https://recipe-api.com/privacy)
-- [Authentication](authentication/recipe-api-authentication.yml)
-- [Plans](plans/recipe-api-plans.yml)
-- [Rate Limits](rate-limits/recipe-api-rate-limits.yml)
-- [Llms Text](https://recipe-api.com/llms.txt)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Recipe API Image Generation API
+- [Recipe Api Authentication](https://apis.io/security/recipe-api/recipe-api-authentication/)
+- [Recipe Api Domain Security](https://apis.io/security/recipe-api/recipe-api-domain-security/)
 
-The Image Generation API from Recipe API — 1 operation(s) for image generation.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://recipe-api.com/docs](https://recipe-api.com/docs)
-- **Base URL:** `https://recipe-api.com`
+Published plans, tiers and prices.
 
-#### Tags
+- [Recipe Api Plans](https://apis.io/plans/recipe-api/recipe-api-plans/)
 
-- Image Generation
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [OpenAPI](openapi/recipe-api-image-generation-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/recipe-api-image-generation-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/recipe-api-image-generation-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [X- Open A P I- Source](https://recipe-api.com/openapi.json)
-- [Documentation](https://recipe-api.com/docs)
-- [Signup](https://recipe-api.com/signup)
-- [Login](https://recipe-api.com/login)
-- [Pricing](https://recipe-api.com/pricing)
-- [Terms of Service](https://recipe-api.com/terms)
-- [Privacy Policy](https://recipe-api.com/privacy)
-- [Authentication](authentication/recipe-api-authentication.yml)
-- [Plans](plans/recipe-api-plans.yml)
-- [Rate Limits](rate-limits/recipe-api-rate-limits.yml)
-- [Llms Text](https://recipe-api.com/llms.txt)
+- [Recipe Api Rate Limits](https://apis.io/rate-limits/recipe-api/recipe-api-rate-limits/)
 
-### Recipe API Ingredients API
+## Where to find this API
 
-Search ingredients free. Per-100g USDA nutrition by ID costs 1 credit.
-
-- **Human URL:** [https://recipe-api.com/docs](https://recipe-api.com/docs)
-- **Base URL:** `https://recipe-api.com`
-
-#### Tags
-
-- Ingredients
-
-#### Properties
-
-- [OpenAPI](openapi/recipe-api-ingredients-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/recipe-api-ingredients-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/recipe-api-ingredients-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [X- Open A P I- Source](https://recipe-api.com/openapi.json)
-- [Documentation](https://recipe-api.com/docs)
-- [Signup](https://recipe-api.com/signup)
-- [Login](https://recipe-api.com/login)
-- [Pricing](https://recipe-api.com/pricing)
-- [Terms of Service](https://recipe-api.com/terms)
-- [Privacy Policy](https://recipe-api.com/privacy)
-- [Authentication](authentication/recipe-api-authentication.yml)
-- [Plans](plans/recipe-api-plans.yml)
-- [Rate Limits](rate-limits/recipe-api-rate-limits.yml)
-- [Llms Text](https://recipe-api.com/llms.txt)
-
-### Recipe API Public API
-
-No authentication required. Try `/api/v1/dinner` for a complete recipe example.
-
-- **Human URL:** [https://recipe-api.com/docs](https://recipe-api.com/docs)
-- **Base URL:** `https://recipe-api.com`
-
-#### Tags
-
-- Public
-
-#### Properties
-
-- [OpenAPI](openapi/recipe-api-public-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/recipe-api-public-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/recipe-api-public-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [X- Open A P I- Source](https://recipe-api.com/openapi.json)
-- [Documentation](https://recipe-api.com/docs)
-- [Signup](https://recipe-api.com/signup)
-- [Login](https://recipe-api.com/login)
-- [Pricing](https://recipe-api.com/pricing)
-- [Terms of Service](https://recipe-api.com/terms)
-- [Privacy Policy](https://recipe-api.com/privacy)
-- [Authentication](authentication/recipe-api-authentication.yml)
-- [Plans](plans/recipe-api-plans.yml)
-- [Rate Limits](rate-limits/recipe-api-rate-limits.yml)
-- [Llms Text](https://recipe-api.com/llms.txt)
-
-### Recipe API Recipes API
-
-Browse recipes free. Full recipe detail costs 1 credit. Sample data shown inline.
-
-- **Human URL:** [https://recipe-api.com/docs](https://recipe-api.com/docs)
-- **Base URL:** `https://recipe-api.com`
-
-#### Tags
-
-- Recipes
-
-#### Properties
-
-- [OpenAPI](openapi/recipe-api-recipes-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/recipe-api-recipes-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/recipe-api-recipes-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [X- Open A P I- Source](https://recipe-api.com/openapi.json)
-- [Documentation](https://recipe-api.com/docs)
-- [Signup](https://recipe-api.com/signup)
-- [Login](https://recipe-api.com/login)
-- [Pricing](https://recipe-api.com/pricing)
-- [Terms of Service](https://recipe-api.com/terms)
-- [Privacy Policy](https://recipe-api.com/privacy)
-- [Authentication](authentication/recipe-api-authentication.yml)
-- [Plans](plans/recipe-api-plans.yml)
-- [Rate Limits](rate-limits/recipe-api-rate-limits.yml)
-- [Llms Text](https://recipe-api.com/llms.txt)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://recipe-api.com)
 - [Documentation](https://recipe-api.com/docs)
 - [Pricing](https://recipe-api.com/pricing)
-- [Signup](https://recipe-api.com/signup)
-- [Login](https://recipe-api.com/login)
-- [Terms of Service](https://recipe-api.com/terms)
-- [Privacy Policy](https://recipe-api.com/privacy)
-- [Llms Text](https://recipe-api.com/llms.txt)
-- [M C P Server](mcp/recipe-api-mcp.yml)
-- [Plans](plans/recipe-api-plans.yml)
-- [Rate Limits](rate-limits/recipe-api-rate-limits.yml)
-- [Authentication](authentication/recipe-api-authentication.yml)
+- [Blog](https://recipe-api.com/blog)
+- [Terms of service](https://recipe-api.com/terms)
+- [Privacy policy](https://recipe-api.com/privacy)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 41.8** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.7 |
+| Contract quality | 51.8 |
+| Contract governance | 0.0 |
+| Operational transparency | 31.6 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 69.7 |
+
+**Agent readiness 57.8** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 18.2** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/recipe-api/](https://apis.io/providers/recipe-api/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Recipe API: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/recipe-api/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
